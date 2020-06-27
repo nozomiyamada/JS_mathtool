@@ -54,14 +54,28 @@ https://nozomiyamada.github.io/tool.html
 |`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! with Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! with Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
 |`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) with Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`beta(a,b,split=1e3,n=5)`|calculate beta function B(a,b) with Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`incomplete_beta(a,b,x,split=1e3,n=5)`|calculate beta function B(x;a,b) with Gauss-Legendre quadrature of n-th Legendre polynomial|
 
-Weierstrass's definition
+> gamma function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\Gamma(s)&space;=&space;(s-1)!&space;=&space;\int_0^{\infty}&space;t^{s-1}e^{-t}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Gamma(s)&space;=&space;(s-1)!&space;=&space;\int_0^{\infty}&space;t^{s-1}e^{-t}dt" title="\Gamma(s) = (s-1)! = \int_0^{\infty} t^{s-1}e^{-t}dt" /></a>
+
+> Weierstrass's definition
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" title="\begin{align*} \frac{1}{\Gamma(s)} &= se^{\gamma s}\prod_{m=1}^{\infty}(1+\frac{s}{m})e^{-s/m} \\ -\log\Gamma(s) &\sim \log s+\gamma s + \sum_{m=1}^{N}\left(\log(1+\frac{s}{m})-\frac{s}{m}\right) \end{align*}" /></a>
 
-
-lower imcomplete gamma function
+> lower imcomplete gamma function
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\gamma(s,x)&space;=&space;\int_0^x&space;t^{s-1}e^{-t}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma(s,x)&space;=&space;\int_0^x&space;t^{s-1}e^{-t}dt" title="\gamma(s,x) = \int_0^x t^{s-1}e^{-t}dt" /></a>
+
+> beta function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=B(a,b)&space;=&space;\int_0^1&space;t^{a-1}(1-t)^{b-1}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?B(a,b)&space;=&space;\int_0^1&space;t^{a-1}(1-t)^{b-1}dt" title="B(a,b) = \int_0^1 t^{a-1}(1-t)^{b-1}dt" /></a>
+
+> incomplete beta function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=B(x;a,b)&space;=&space;\int_0^x&space;t^{a-1}(1-t)^{b-1}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?B(x;a,b)&space;=&space;\int_0^x&space;t^{a-1}(1-t)^{b-1}dt" title="B(x;a,b) = \int_0^x t^{a-1}(1-t)^{b-1}dt" /></a>
+
 
 
