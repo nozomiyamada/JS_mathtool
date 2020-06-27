@@ -47,8 +47,9 @@ https://nozomiyamada.github.io/tool.html
 |function name|description|
 |:-:|:--|
 |`fact(n)`|calculate factorial n! , `n` must be integer|
-|`round(num, decimal)`|same as Python function `round()`|
-|`gamma(x, delta=1e-4, max_iter=1e7)`|calculate Γ(x) = (x-1)! with [trapezoidal rule](https://en.wikipedia.org/wiki/Trapezoidal_rule) (not precise as [Double Exponential](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature))|
+|`round(num, decimal=0)`|same as Python function `round()`|
+|`Euler_const`|Euler's constant γ = 0.5772156649015328606|
+|`gamma(x, delta=1e-4, max_iter=1e7)`|calculate Γ(x) = (x-1)! with Weierstrass's definition (may be not as precise as [Double Exponential](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature))|
 
 
 
