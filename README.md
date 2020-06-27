@@ -2,6 +2,8 @@
 
 JavaScript functions for mathematic calculations
 
+**"not very precise, but fast enough"**
+
 https://nozomiyamada.github.io/tool.html
 
 - `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
@@ -31,7 +33,7 @@ https://nozomiyamada.github.io/tool.html
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;Pr(0&space;\leq&space;x<z)&space;&=&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&\sim&space;\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;Pr(0&space;\leq&space;x<z)&space;&=&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&\sim&space;\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" title="\begin{align*} Pr(0 \leq x<z) &= \frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx \\ &= \frac{1}{2}{\rm erf}(z/\sqrt{2}) \\ &\sim \frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n+1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k} \end{align*}" /></a>
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;z(Pr)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2p)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}\sqrt{\pi}Pr^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;z(Pr)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2p)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}\sqrt{\pi}Pr^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" title="\begin{align*} z(Pr) &= \sqrt{2}~{\rm erf}^{-1}(2p) \\ &\sim \sum_{n=0}^{N}\frac{C_k}{2k+1}\sqrt{\pi}Pr^{2k+1} \\ &\text{where}~C_k = \sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m+1)(2m+1)} \end{align*}" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;z(Pr)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2Pr)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\sqrt{\pi}Pr)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;z(Pr)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2Pr)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\sqrt{\pi}Pr)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" title="\begin{align*} z(Pr) &= \sqrt{2}~{\rm erf}^{-1}(2Pr) \\ &\sim \sum_{n=0}^{N}\frac{C_k}{2k+1}(\sqrt{\pi}Pr)^{2k+1} \\ &\text{where}~C_k = \sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m+1)(2m+1)} \end{align*}" /></a>
 
 ### Poisson Distribution
 
@@ -54,7 +56,7 @@ https://nozomiyamada.github.io/tool.html
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" title="\begin{align*} \frac{1}{\Gamma(s)} &= se^{\gamma s}\prod_{m=1}^{\infty}(1+\frac{s}{m})e^{-s/m} \\ -\log\Gamma(s) &\sim \log s+\gamma s + \sum_{m=1}^{N}\left(\log(1+\frac{s}{m})-\frac{s}{m}\right) \end{align*}" /></a>
 
-
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;\gamma(s,x)&space;&=&space;\int_0^x&space;t^{s-1}e^{-t}dt&space;\\&space;&\sim&space;\sum_{n=0}^{x/h-1}\frac{h}{2}\left((nh)^{s-1}e^{-nh}&plus;((n&plus;1)h)^{s-1}e^{-(n&plus;1)h}&space;\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\gamma(s,x)&space;&=&space;\int_0^x&space;t^{s-1}e^{-t}dt&space;\\&space;&\sim&space;\sum_{n=0}^{x/h-1}\frac{h}{2}\left((nh)^{s-1}e^{-nh}&plus;((n&plus;1)h)^{s-1}e^{-(n&plus;1)h}&space;\right)&space;\end{align*}" title="\begin{align*} \gamma(s,x) &= \int_0^x t^{s-1}e^{-t}dt \\ &\sim \sum_{n=0}^{x/h-1}\frac{h}{2}\left((nh)^{s-1}e^{-nh}+((n+1)h)^{s-1}e^{-(n+1)h} \right) \end{align*}" /></a>
 
 
 
