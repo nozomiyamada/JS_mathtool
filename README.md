@@ -46,12 +46,13 @@ https://nozomiyamada.github.io/tool.html
 
 |function name|description|
 |:-:|:--|
-|`fact(n)`|calculate factorial n! , `n` must be integer|
-|`round(num, decimal=0)`|same as Python function `round()`|
+|`fact(n)`|calculate factorial n! , `n` must be an integer|
+|`round(num, decimal=0)`|same as the Python function `round()`|
 |`Euler_const`|Euler's constant γ = 0.5772156649015328606|
-|`gamma(x, delta=1e-4, max_iter=1e7)`|calculate Γ(x) = (x-1)! with Weierstrass's definition (may be not as precise as [Double Exponential](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature))|
+|`gamma(s, N=1e6)`|calculate Γ(s) = (s-1)! with Weierstrass's definition up to N-th order, precise within 5 siginificant digits (may be not as precise as [Double Exponential](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature))|
+|`incomplete_gamma(s,x,dx=1e-6)`|calculate lower incomplete gamma function γ(s,x) with simple trapezoidal integration|
 
-
+<a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" title="\begin{align*} \frac{1}{\Gamma(s)} &= se^{\gamma s}\prod_{m=1}^{\infty}(1+\frac{s}{m})e^{-s/m} \\ -\log\Gamma(s) &\sim \log s+\gamma s + \sum_{m=1}^{N}\left(\log(1+\frac{s}{m})-\frac{s}{m}\right) \end{align*}" /></a>
 
 
 
