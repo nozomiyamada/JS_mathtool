@@ -25,7 +25,7 @@ function round(num, decimal){
  * @param {Number} z z-score
  * @param {Int} N order of Taylor expansion
  * @return {Number} probability Pr(0≤x≤z)
- * Pr(z) = 1/√(2π)∫[0->z]exp(-x^2/2)dx = 0.5erf(z/√2)
+ * Pr(0≤x<z) = 1/√(2π)∫[0->z]exp(-x^2/2)dx = 0.5erf(z/√2)
  * ~ 1/√π Σ[n:0->N](z/√2)/(2n+1) Π[k:1->n]-(z/√2)^2/k
  * N=100 is default. if z<5, it is enough to set N~50
  */
