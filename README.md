@@ -2,7 +2,7 @@
 
 JavaScript functions for mathematic calculations
 
-**"not very precise, but fast enough"**
+**"not very precise, but simple and fast enough"** (guarantee 5 significant digits)
 
 https://nozomiyamada.github.io/tool.html
 
@@ -49,15 +49,19 @@ https://nozomiyamada.github.io/tool.html
 |function name|description|
 |:-:|:--|
 |`fact(n)`|calculate factorial n! , `n` must be an integer|
-|`round(num, decimal=0)`|same as the Python function `round()`|
+|`round(num,decimal=0)`|same as the Python function `round()`|
 |`Euler_const`|Euler's constant γ = 0.5772156649015328606|
-|`gamma(s, N=1e6)`|calculate Γ(s) = (s-1)! with Weierstrass's definition up to N-th order, precise within 5 siginificant digits (may be not as precise as [Double Exponential](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature))|
-|`incomplete_gamma(s,x,dx=1e-6)`|calculate lower incomplete gamma function γ(s,x) with simple trapezoidal integration|
+|`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! with Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! with Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
+|`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) with Gauss-Legendre quadrature of n-th Legendre polynomial|
+
+Weierstrass's definition
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" title="\begin{align*} \frac{1}{\Gamma(s)} &= se^{\gamma s}\prod_{m=1}^{\infty}(1+\frac{s}{m})e^{-s/m} \\ -\log\Gamma(s) &\sim \log s+\gamma s + \sum_{m=1}^{N}\left(\log(1+\frac{s}{m})-\frac{s}{m}\right) \end{align*}" /></a>
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;\gamma(s,x)&space;&=&space;\int_0^x&space;t^{s-1}e^{-t}dt&space;\\&space;&\sim&space;\sum_{n=0}^{x/h-1}\frac{h}{2}\left((nh)^{s-1}e^{-nh}&plus;((n&plus;1)h)^{s-1}e^{-(n&plus;1)h}&space;\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\gamma(s,x)&space;&=&space;\int_0^x&space;t^{s-1}e^{-t}dt&space;\\&space;&\sim&space;\sum_{n=0}^{x/h-1}\frac{h}{2}\left((nh)^{s-1}e^{-nh}&plus;((n&plus;1)h)^{s-1}e^{-(n&plus;1)h}&space;\right)&space;\end{align*}" title="\begin{align*} \gamma(s,x) &= \int_0^x t^{s-1}e^{-t}dt \\ &\sim \sum_{n=0}^{x/h-1}\frac{h}{2}\left((nh)^{s-1}e^{-nh}+((n+1)h)^{s-1}e^{-(n+1)h} \right) \end{align*}" /></a>
 
+lower imcomplete gamma function
 
+<a href="https://www.codecogs.com/eqnedit.php?latex=\gamma(s,x)&space;=&space;\int_0^x&space;t^{s-1}e^{-t}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma(s,x)&space;=&space;\int_0^x&space;t^{s-1}e^{-t}dt" title="\gamma(s,x) = \int_0^x t^{s-1}e^{-t}dt" /></a>
 
 
