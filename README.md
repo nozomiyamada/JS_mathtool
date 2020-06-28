@@ -14,7 +14,7 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 - `statistics.js` functions for numeric analisys and statistics
 - `misc.js` other various functions
 
-## `gcd_lcm.js`
+# `gcd_lcm.js`
 
 |function name|description|
 |:-:|:--|
@@ -23,9 +23,9 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 |`lcm2(a,b)`|calculate LCM of two positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
 |`lcm(nums)`|calculate LCM of all integers in array `nums`|
 
-## `statistics.js`
+# `statistics.js`
 
-### numeric analysis
+## numeric analysis
 
 |function name|description|
 |:-:|:--|
@@ -43,17 +43,17 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 3
 ~~~
 
-> Gauss-Legendre quadrature
+### Gauss-Legendre quadrature
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;\int_a^bf(x)dx&space;&=&space;\frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t&plus;\frac{a&plus;b}{2}\right)dt\\&space;&\sim&space;\frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i&plus;\frac{a&plus;b}{2}\right)\\&space;&\text{where&space;$t_i$&space;is&space;the&space;i-th&space;zero&space;point&space;of&space;Legendre&space;polynomial}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\int_a^bf(x)dx&space;&=&space;\frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t&plus;\frac{a&plus;b}{2}\right)dt\\&space;&\sim&space;\frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i&plus;\frac{a&plus;b}{2}\right)\\&space;&\text{where&space;$t_i$&space;is&space;the&space;i-th&space;zero&space;point&space;of&space;Legendre&space;polynomial}&space;\end{align*}" title="\begin{align*} \int_a^bf(x)dx &= \frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t+\frac{a+b}{2}\right)dt\\ &\sim \frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i+\frac{a+b}{2}\right)\\ &\text{where $t_i$ is the i-th zero point of Legendre polynomial} \end{align*}" /></a>
 
 
-> Newton's Method
+### Newton's Method
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" title="x_{n+1} = x_n + \frac{y-f(x_n)}{f'(x_n)}" /></a>
 
 
-### normal distribution
+## normal distribution
 
 ![z_to_p](https://user-images.githubusercontent.com/44984892/85935209-7dd9c980-b918-11ea-9763-b93469034964.png)
 
@@ -67,7 +67,7 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;z(p)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2p)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\sqrt{\pi}p)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;z(p)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2p)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\sqrt{\pi}p)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" title="\begin{align*} z(p) &= \sqrt{2}~{\rm erf}^{-1}(2p) \\ &\sim \sum_{n=0}^{N}\frac{C_k}{2k+1}(\sqrt{\pi}p)^{2k+1} \\ &\text{where}~C_k = \sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m+1)(2m+1)} \end{align*}" /></a>
 
-### t-distribution
+## t-distribution
 
 ![t_to_p](https://user-images.githubusercontent.com/44984892/85932777-56bfcf80-b8f9-11ea-8f52-9b1172462bf6.png)
 
@@ -78,7 +78,7 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(t,df)&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(t,df)&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" title="\begin{align*} p(t,df) &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\ &\text{where}~x =\frac{t+\sqrt{t^2+df}}{2\sqrt{t^2+df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}} \end{align*}" /></a>
 
-### F-distribution
+## F-distribution
 
 ![f_to_p](https://user-images.githubusercontent.com/44984892/85934703-0d7b7a00-b911-11ea-84cb-e940fc5630d9.png)
 
@@ -89,7 +89,7 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" title="\begin{align*} p(f,df_1,df_2) &= 1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)} \\ &\text{where}~x =\frac{df_1f}{df_1f+df_2} \end{align*}" /></a>
 
-### Poisson distribution
+## Poisson distribution
 
 ![poisson](https://user-images.githubusercontent.com/44984892/85938399-4d555800-b937-11ea-9016-ce6549dfc131.png)
 
@@ -100,7 +100,7 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\leq k) &= \sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!} \end{align*}" /></a>
 
-### supplementary functions
+## supplementary functions
 
 |function name|description|
 |:-:|:--|
