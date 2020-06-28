@@ -4,22 +4,53 @@ JavaScript functions for mathematic calculations
 
 **"not very precise, but simple and fast enough"** (guarantee at least 5 significant digits)
 
-https://nozomiyamada.github.io/tool.html
+Please feel free to use these functions.
+
+Demo https://nozomiyamada.github.io/tool.html
+
+_note_: All codes have no exception handling (e.g. checking integer). You should be careful when you use them, or implement by yourself.
 
 - `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
-- `statistics.js` functions for statistics
+- `statistics.js` functions for numeric analisys and statistics
 - `misc.js` other various functions
 
 ## `gcd_lcm.js`
 
 |function name|description|
 |:-:|:--|
-|`gcd2(a, b)`|calculate GCD of positive integers `a` and `b` by Euclidean Algorithm|
+|`gcd2(a,b)`|calculate GCD of two positive integers `a` and `b` by Euclidean Algorithm|
 |`gcd(nums)`|calculate GCD of all integers in array `nums`|
-|`lcm2(a, b)`|calculate LCM of positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
+|`lcm2(a,b)`|calculate LCM of two positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
 |`lcm(nums)`|calculate LCM of all integers in array `nums`|
 
 ## `statistics.js`
+
+### numeric analysis
+
+|function name|description|
+|:-:|:--|
+|`gauss_legendre(a,b,func,split=1000,n=5)`|calculate ∫[a->b]f(x)dx by [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gaussian_quadrature) of n-th Legendre polynomial. `func` must be a function that takes only one argument like f(x). `split` determines the number of intervals in the range of integration|
+|`newton(y,x0,func,func_prime,iter=15)`|solce the equation y = f(x) by using [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method). `func` and `func_prime` (derivative of `func`) must be functions that take only one argument like f(x), f'(x). `x0` is an initial guess for x. You can set iteration times `iter`.|
+
+~~~javascript
+>>> fx = function(x){return x**2};
+>>> gauss_legendre(0,3,fx);
+3
+
+>>> f = function(x){return x**2+1};
+>>> fprime = function(x){return 2*x};
+>>> newton(10,1,f,fprime);
+3
+~~~
+
+> Gauss-Legendre quadrature
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;\int_a^bf(x)dx&space;&=&space;\frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t&plus;\frac{a&plus;b}{2}\right)dt\\&space;&\sim&space;\frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i&plus;\frac{a&plus;b}{2}\right)\\&space;&\text{where&space;$t_i$&space;is&space;the&space;i-th&space;zero&space;point&space;of&space;Legendre&space;polynomial}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\int_a^bf(x)dx&space;&=&space;\frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t&plus;\frac{a&plus;b}{2}\right)dt\\&space;&\sim&space;\frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i&plus;\frac{a&plus;b}{2}\right)\\&space;&\text{where&space;$t_i$&space;is&space;the&space;i-th&space;zero&space;point&space;of&space;Legendre&space;polynomial}&space;\end{align*}" title="\begin{align*} \int_a^bf(x)dx &= \frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t+\frac{a+b}{2}\right)dt\\ &\sim \frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i+\frac{a+b}{2}\right)\\ &\text{where $t_i$ is the i-th zero point of Legendre polynomial} \end{align*}" /></a>
+
+
+> Newton's Method
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" title="x_{n+1} = x_n + \frac{y-f(x_n)}{f'(x_n)}" /></a>
 
 
 ### normal distribution
@@ -82,7 +113,7 @@ https://nozomiyamada.github.io/tool.html
 |`beta(a,b,split=1e3,n=5)`|calculate beta function B(a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`incomplete_beta(a,b,x,split=1e3,n=5)`|calculate beta function B(x;a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`sigmoid(x)`|calculate sigmoid function|
-|`gauss_legendre(a,b,func,split=1000,n=5)`|calculate ∫[a->b]func(x)dx by Gauss-Legendre quadrature of n-th Legendre polynomial. `func` must be a function that takes only one argument. `split` determines the number of intervals in the range of integration|
+
 
 > gamma function
 
