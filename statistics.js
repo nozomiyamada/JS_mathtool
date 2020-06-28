@@ -51,9 +51,9 @@ function z_to_p(z, N=100){
  * final X = z
  * z = √(2x-1)^2df/4x(1-x)
  */
-function p_to_z(p){
+function p_to_z(p, iter=20){
   let x = 1;
-  for(var i=0;i<10;i++){
+  for(var i=0;i<iter;i++){
     dif = -Math.exp(-1*x*x/2)/Math.sqrt(2*Math.PI);
     x += (p-z_to_p(x)) / dif;
   }
