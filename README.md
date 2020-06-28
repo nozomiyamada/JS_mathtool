@@ -1,10 +1,9 @@
 # JS_mathtool
 
-JavaScript functions for mathematic calculations
+JavaScript functions for mathematic calculations. Please feel free to use them.
 
 **"not very precise, but simple and fast enough"** (guarantee at least 5 significant digits)
 
-Please feel free to use these functions.
 
 Demo https://nozomiyamada.github.io/tool.html
 
@@ -29,8 +28,10 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 
 |function name|description|
 |:-:|:--|
-|`gauss_legendre(a,b,func,split=1000,n=5)`|calculate ∫[a->b]f(x)dx by [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gaussian_quadrature) of n-th Legendre polynomial. `func` must be a function that takes only one argument like f(x). `split` determines the number of intervals in the range of integration|
-|`newton(y,x0,func,func_prime,iter=15)`|solce the equation y = f(x) by using [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method). `func` and `func_prime` (derivative of `func`) must be functions that take only one argument like f(x), f'(x). `x0` is an initial guess for x. You can set iteration times `iter`.|
+|`gauss_legendre(a,b,func,split=1000,n=5)`|calculate ∫[a->b]f(x)dx by [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gaussian_quadrature) of n-th Legendre polynomial. `func` must be an explicit function that takes only one argument like f(x). `split` determines the number of intervals in the range of integration|
+|`newton(y,x0,func,func_prime,iter=15)`|solve the equation y = f(x) by using [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method). `func` and `func_prime` (derivative of `func`) must be explicit functions that take only one argument like f(x), f'(x). `x0` is an initial guess for x. You can set iteration times `iter`.|
+|`brent(y,a0,b0,func,iter=100,epsiron=1e-15)`|solve the equation y = f(x) by using [Brent's method](https://en.wikipedia.org/wiki/Brent%27s_method). `func` must be an explicit function that takes only one argument like f(x). `a0` and `b0` are initial guess for x. These two numbers must have opposite sign, otherwise the function will return `null`. You can set maximum iteration times `iter` and minimum width of step `epsiron` in each iteration.|
+
 
 ~~~javascript
 >>> fx = function(x){return x**2};
@@ -41,14 +42,20 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 >>> fprime = function(x){return 2*x};
 >>> newton(10,1,f,fprime);
 3
+
+>>> f = function(x){return x**3};
+>>> brent(8,-1,6,f);
+3
 ~~~
 
-### Gauss-Legendre quadrature
+Both `newton` and `brent` will abort the process when error is below 1e-15 and output the total iteration times on the console.
+
+> Gauss-Legendre quadrature
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;\int_a^bf(x)dx&space;&=&space;\frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t&plus;\frac{a&plus;b}{2}\right)dt\\&space;&\sim&space;\frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i&plus;\frac{a&plus;b}{2}\right)\\&space;&\text{where&space;$t_i$&space;is&space;the&space;i-th&space;zero&space;point&space;of&space;Legendre&space;polynomial}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\int_a^bf(x)dx&space;&=&space;\frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t&plus;\frac{a&plus;b}{2}\right)dt\\&space;&\sim&space;\frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i&plus;\frac{a&plus;b}{2}\right)\\&space;&\text{where&space;$t_i$&space;is&space;the&space;i-th&space;zero&space;point&space;of&space;Legendre&space;polynomial}&space;\end{align*}" title="\begin{align*} \int_a^bf(x)dx &= \frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t+\frac{a+b}{2}\right)dt\\ &\sim \frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i+\frac{a+b}{2}\right)\\ &\text{where $t_i$ is the i-th zero point of Legendre polynomial} \end{align*}" /></a>
 
 
-### Newton's Method
+> Newton's Method
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" title="x_{n+1} = x_n + \frac{y-f(x_n)}{f'(x_n)}" /></a>
 
