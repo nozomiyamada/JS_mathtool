@@ -2,7 +2,7 @@
 
 JavaScript functions for mathematic calculations
 
-**"not very precise, but simple and fast enough"** (guarantee 5 significant digits)
+**"not very precise, but simple and fast enough"** (guarantee at least 5 significant digits)
 
 https://nozomiyamada.github.io/tool.html
 
@@ -14,48 +14,72 @@ https://nozomiyamada.github.io/tool.html
 
 |function name|description|
 |:-:|:--|
-|`gcd2(a,b)`|calculate GCD of positive integers `a` and `b` with Euclidean Algorithm|
+|`gcd2(a, b)`|calculate GCD of positive integers `a` and `b` by Euclidean Algorithm|
 |`gcd(nums)`|calculate GCD of all integers in array `nums`|
-|`lcm2(a,b)`|calculate LCM of positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
+|`lcm2(a, b)`|calculate LCM of positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
 |`lcm(nums)`|calculate LCM of all integers in array `nums`|
 
 ## `statistics.js`
 
 
-### Normal Distribution
+### normal distribution
 
 ![z_to_p](https://user-images.githubusercontent.com/44984892/85918560-24c55380-b88e-11ea-9c23-9b35270cb204.png)
 
 |function name|description|
 |:-:|:--|
-|`z_to_pr(z, N=100)`|calculate one-sided Pr(0≤x<z) from z-score with Taylor expansion up to N-th order|
-|`pr_to_z(p, N=300)`|calculate z-score from one-sided Pr(0≤x<z) with Taylor expansion up to N-th order|
+|`z_to_pr(z, N=100)`|calculate one-sided Pr(0≤x<z) from z-score by Taylor expansion up to N-th order|
+|`pr_to_z(p, N=300)`|calculate z-score from one-sided Pr(0≤x<z) by Taylor expansion up to N-th order|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;Pr(0&space;\leq&space;x<z)&space;&=&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&\sim&space;\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;Pr(0&space;\leq&space;x<z)&space;&=&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&\sim&space;\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" title="\begin{align*} Pr(0 \leq x<z) &= \frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx \\ &= \frac{1}{2}{\rm erf}(z/\sqrt{2}) \\ &\sim \frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n+1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k} \end{align*}" /></a>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;z(Pr)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2Pr)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\sqrt{\pi}Pr)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;z(Pr)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2Pr)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\sqrt{\pi}Pr)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" title="\begin{align*} z(Pr) &= \sqrt{2}~{\rm erf}^{-1}(2Pr) \\ &\sim \sum_{n=0}^{N}\frac{C_k}{2k+1}(\sqrt{\pi}Pr)^{2k+1} \\ &\text{where}~C_k = \sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m+1)(2m+1)} \end{align*}" /></a>
 
-### Poisson Distribution
+### t-distribution
+
+![t_to_p](https://user-images.githubusercontent.com/44984892/85932777-56bfcf80-b8f9-11ea-8f52-9b1172462bf6.png)
 
 |function name|description|
 |:-:|:--|
-|`poisson(lambda, k)`|calculate Poisson Pr(X=k) with probability mass function|
+|`t_to_p(t, df)`|calculate one-tailed p-value from given t-score and degree of freedom by incomplete beta function|
+|`p_to_t(p, df)`|calculate t-score from one-tailed p-value and degree of freedom by 10 times iterations of Newton's Method|
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(t,df)&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(t,df)&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" title="\begin{align*} p(t,df) &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\ &\text{where}~x =\frac{t+\sqrt{t^2+df}}{2\sqrt{t^2+df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}} \end{align*}" /></a>
+
+### F-distribution
+
+![f_to_p](https://user-images.githubusercontent.com/44984892/85934703-0d7b7a00-b911-11ea-84cb-e940fc5630d9.png)
+
+|function name|description|
+|:-:|:--|
+|`f_to_p(f, df1, df2)`|calculate one-tailed p-value from given F-value and degree of freedom by incomplete beta function|
+|`p_to_f(p, df1, df2)`|calculate F-value from one-tailed p-value and degree of freedom by 10 times iterations of Newton's Method|
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" title="\begin{align*} p(f,df_1,df_2) &= 1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)} \\ &\text{where}~x =\frac{df_1f}{df_1f+df_2} \end{align*}" /></a>
+
+### Poisson distribution
+
+|function name|description|
+|:-:|:--|
+|`poisson(lambda, k)`|calculate Poisson Pr(X=k) directly from probability mass function|
 |`poisson_cum(lambda, k)`|calculate cumulative Poisson Pr(0≤X≤k)|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\leq k) &= \sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!} \end{align*}" /></a>
 
-### Supplementary Functions
+### supplementary functions
 
 |function name|description|
 |:-:|:--|
 |`fact(n)`|calculate factorial n! , `n` must be an integer|
 |`round(num,decimal=0)`|same as the Python function `round()`|
 |`Euler_const`|Euler's constant γ = 0.5772156649015328606|
-|`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! with Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! with Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
-|`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) with Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`beta(a,b,split=1e3,n=5)`|calculate beta function B(a,b) with Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`incomplete_beta(a,b,x,split=1e3,n=5)`|calculate beta function B(x;a,b) with Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
+|`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`beta(a,b,split=1e3,n=5)`|calculate beta function B(a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`incomplete_beta(a,b,x,split=1e3,n=5)`|calculate beta function B(x;a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`sigmoid(x)`|calculate sigmoid function|
+|`gauss_legendre(a,b,func,split=1000,n=5)`|calculate ∫[a->b]func(x)dx by Gauss-Legendre quadrature of n-th Legendre polynomial. `func` must be a function that takes only one argument. `split` determines the number of intervals in the range of integration|
 
 > gamma function
 
@@ -76,6 +100,11 @@ https://nozomiyamada.github.io/tool.html
 > incomplete beta function
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=B(x;a,b)&space;=&space;\int_0^x&space;t^{a-1}(1-t)^{b-1}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?B(x;a,b)&space;=&space;\int_0^x&space;t^{a-1}(1-t)^{b-1}dt" title="B(x;a,b) = \int_0^x t^{a-1}(1-t)^{b-1}dt" /></a>
+
+> sigmoid function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=S(x)&space;=&space;\frac{1}{1&plus;e^{-x}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?S(x)&space;=&space;\frac{1}{1&plus;e^{-x}}" title="S(x) = \frac{1}{1+e^{-x}}" /></a>
+
 
 
 
