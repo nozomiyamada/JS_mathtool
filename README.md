@@ -28,9 +28,9 @@ https://nozomiyamada.github.io/tool.html
 
 |function name|description|
 |:-:|:--|
-|`z_to_p(z, N=100)`|calculate one-tailed p(z≤x) from z-score by Taylor expansion up to N-th order|
-|`p_to_z(p)`|calculate z-score from one-tailed p(z≤x) by 10 times iterations of Newton's Method|
-|`p_to_z2(p, N=300)`|calculate z-score from one-tailed p(z≤x) by Taylor expansion up to N-th order|
+|`z_to_p(z, N=100)`|calculate one-tailed p(z≤x) from `z` score by Taylor expansion up to `N`-th order|
+|`p_to_z(p, iter=20)`|calculate z-score from one-tailed `p`(z≤x) by `iter` times iterations of Newton's Method|
+|`p_to_z2(p, N=300)`|calculate z-score from one-tailed `p`(z≤x) by Taylor expansion up to `N`-th order|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(z&space;\leq&space;x)&space;&=&space;\frac{1}{2}&space;-&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{2}~{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&\sim&space;\frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(z&space;\leq&space;x)&space;&=&space;\frac{1}{2}&space;-&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{2}~{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&\sim&space;\frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" title="\begin{align*} p(z \leq x) &= \frac{1}{2} - \frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx \\ &= \frac{1}{2}-\frac{1}{2}~{\rm erf}(z/\sqrt{2}) \\ &\sim \frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n+1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k} \end{align*}" /></a>
 
@@ -42,8 +42,8 @@ https://nozomiyamada.github.io/tool.html
 
 |function name|description|
 |:-:|:--|
-|`t_to_p(t, df)`|calculate one-tailed p-value from given t-score and degree of freedom by incomplete beta function|
-|`p_to_t(p, df)`|calculate t-score from one-tailed p-value and degree of freedom by 10 times iterations of Newton's Method|
+|`t_to_p(t, df)`|calculate one-tailed p-value from given `t` score and `df` by incomplete beta function|
+|`p_to_t(p, df)`|calculate t-score from one-tailed `p` value and `df` by 10 times iterations of Newton's Method|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(t,df)&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(t,df)&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" title="\begin{align*} p(t,df) &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\ &\text{where}~x =\frac{t+\sqrt{t^2+df}}{2\sqrt{t^2+df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}} \end{align*}" /></a>
 
@@ -53,17 +53,19 @@ https://nozomiyamada.github.io/tool.html
 
 |function name|description|
 |:-:|:--|
-|`f_to_p(f, df1, df2)`|calculate one-tailed p-value from given F-value and degree of freedom by incomplete beta function|
-|`p_to_f(p, df1, df2)`|calculate F-value from one-tailed p-value and degree of freedom by 10 times iterations of Newton's Method|
+|`f_to_p(F, df1, df2)`|calculate one-tailed p-value from given `F` value and `df1``df2` by incomplete beta function|
+|`p_to_f(p, df1, df2)`|calculate F-value from one-tailed `p` value and `df1``df2` by 10 times iterations of Newton's Method|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" title="\begin{align*} p(f,df_1,df_2) &= 1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)} \\ &\text{where}~x =\frac{df_1f}{df_1f+df_2} \end{align*}" /></a>
 
 ### Poisson distribution
 
+![poisson](https://user-images.githubusercontent.com/44984892/85938399-4d555800-b937-11ea-9016-ce6549dfc131.png)
+
 |function name|description|
 |:-:|:--|
-|`poisson(lambda, k)`|calculate Poisson Pr(X=k) directly from probability mass function|
-|`poisson_cum(lambda, k)`|calculate cumulative Poisson Pr(0≤X≤k)|
+|`poisson(lambda, k)`|calculate Poisson Pr(X=`k`) directly from probability mass function|
+|`poisson_cum(lambda, k)`|calculate cumulative Poisson Pr(0≤X≤`k`)|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\leq k) &= \sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!} \end{align*}" /></a>
 
@@ -107,5 +109,10 @@ https://nozomiyamada.github.io/tool.html
 <a href="https://www.codecogs.com/eqnedit.php?latex=S(x)&space;=&space;\frac{1}{1&plus;e^{-x}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?S(x)&space;=&space;\frac{1}{1&plus;e^{-x}}" title="S(x) = \frac{1}{1+e^{-x}}" /></a>
 
 
+## `misc.js`
+
+|function name|description|
+|:-:|:--|
+|`convert_base(num, base_from, base_to)`|convert base|
 
 
