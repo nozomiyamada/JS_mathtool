@@ -53,8 +53,15 @@
 
 % t-distribution
 \begin{align*} 
-    p(t,df) &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\
+    p(t,df) &= \int_t^{\infty}\frac{\Gamma((df+1)/2)}{\sqrt{df\cdot\pi}~\Gamma(df/2)}\left(1+\frac{s^2}{df}\right)^{-\frac{df+1}{2}}ds\\
+    &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\
     &\text{where}~x =\frac{t+\sqrt{t^2+df}}{2\sqrt{t^2+df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}
+\end{align*}
+
+% chi2 distribution
+\begin{align*} 
+    p(x,df) &= \int_x^{\infty}\frac{1}{2^{k/2}~\Gamma(k/2)}t^{\frac{k}{2}-1}e^{-\frac{k}{2}}dt\\
+    &= 1-\frac{\gamma(k/2,x/2)}{\Gamma(k/2)}
 \end{align*}
 
 % F-distribution
@@ -63,9 +70,11 @@
     &\text{where}~x =\frac{df_1f}{df_1f+df_2}
 \end{align*}
 
+
 % poisson
 \begin{align*} 
     Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\
-    Pr(X\leq k) &= \sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}
+    Pr(X\geq k) &= \sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!} \\
+    p(X\geq k) &= \int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t+1)}dt
 \end{align*}
 

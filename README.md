@@ -2,12 +2,12 @@
 
 JavaScript functions for mathematic calculations. Please feel free to copy and use.
 
-**"not very precise, but simple and fast enough"** (guarantee at least 5 significant digits)
+**"not very precise, but simple and fast enough"** (guarantee at least 6 significant digits)
 
 
 Demo https://nozomiyamada.github.io/tool.html
 
-___note___: Some codes have no exception handling (e.g. checking integer). You should be careful when you use them, or implement by yourself.
+___note___: Some codes have no exception handling (e.g. checking integer). You should be careful when you use them, or implement by yourself. If you want to analyze data on Python (Scipy) or R, you don't have to use my functions at all, because they are more precise and convenient.
 
 - `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
 - `special_func.js` numeric analysis methods and special functions e.g. gamma, beta, erf
@@ -39,16 +39,16 @@ ___note___: Some codes have no exception handling (e.g. checking integer). You s
 
 ~~~javascript
 >>> fx = function(x){return x**2};
->>> gauss_legendre(0,3,fx);
+>>> gauss_legendre(fx, a=0, b=3);
 3
 
 >>> f = function(x){return x**2+1};
 >>> fprime = function(x){return 2*x};
->>> newton(10,1,f,fprime);
+>>> newton(f, fprime, y=10, x0=1);
 3
 
 >>> f = function(x){return x**3};
->>> brent(8,-1,6,f);
+>>> brent(f, y=8, a0=-1, b0=6);
 2
 ~~~
 
@@ -91,7 +91,7 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`inv_gamma(y,iter=30)`|calculate inverse gamma s = Γ<sup>-1</sup>(y) by Newton's Method (initial s<sub>0</sub> is selected automatically)|
-|`inv_incomplete_gamma(s,y,x0=1,iter=30)`|calculate inverse complete gamma x = γ<sup>-1</sup>(s,y) by Newton's Method (initial x<sub>0</sub>  = 1)|
+|`inv_incomplete_gamma(s,y,x0=1,iter=30)`|calculate inverse complete gamma x = γ<sup>-1</sup>(s,y) by Newton's Method (default initial x<sub>0</sub>  = s)|
 |`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma` if `N` is not enough)|
 
 > gamma function
@@ -162,36 +162,51 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 ## t-distribution
 
-![t_to_p](https://user-images.githubusercontent.com/44984892/85932777-56bfcf80-b8f9-11ea-8f52-9b1172462bf6.png)
+![t_to_p](https://user-images.githubusercontent.com/44984892/86042285-20a55b80-ba71-11ea-9565-dd276dfb9add.png)
 
 |function name|description|
 |:-:|:--|
-|`t_to_p(t, df)`|calculate one-tailed p-value from given `t` score and `df` by incomplete beta function|
-|`p_to_t(p, df)`|calculate t-score from one-tailed `p` value and `df` by 10 times iterations of Newton's Method|
+|`t_to_p(t, df)`|calculate one-tailed p-value from given `t` score and `df` by `regularized_beta`|
+|`p_to_t(p, df)`|calculate t-score from one-tailed `p` value and `df` by `inv_regularized_beta`|
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(t,df)&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(t,df)&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" title="\begin{align*} p(t,df) &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\ &\text{where}~x =\frac{t+\sqrt{t^2+df}}{2\sqrt{t^2+df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}} \end{align*}" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(t,df)&space;&=&space;\int_t^{\infty}\frac{\Gamma((df&plus;1)/2)}{\sqrt{df\cdot\pi}~\Gamma(df/2)}\left(1&plus;\frac{s^2}{df}\right)^{-\frac{df&plus;1}{2}}ds\\&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(t,df)&space;&=&space;\int_t^{\infty}\frac{\Gamma((df&plus;1)/2)}{\sqrt{df\cdot\pi}~\Gamma(df/2)}\left(1&plus;\frac{s^2}{df}\right)^{-\frac{df&plus;1}{2}}ds\\&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" title="\begin{align*} p(t,df) &= \int_t^{\infty}\frac{\Gamma((df+1)/2)}{\sqrt{df\cdot\pi}~\Gamma(df/2)}\left(1+\frac{s^2}{df}\right)^{-\frac{df+1}{2}}ds\\ &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\ &\text{where}~x =\frac{t+\sqrt{t^2+df}}{2\sqrt{t^2+df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}} \end{align*}" /></a>
+
+
+## χ<sup>2</sup>-distribution 
+
+![chi2_to_p](https://user-images.githubusercontent.com/44984892/86042339-36b31c00-ba71-11ea-9970-de2dc4494166.png)
+
+|function name|description|
+|:-:|:--|
+|`chi_to_p(chi, df)`|calculate one-tailed p-value from given χ<sup>2</sup> score `chi` and `df` by `gamma`|
+|`p_to_chi(p, df)`|calculate χ<sup>2</sup> score from one-tailed `p` value and `df` by `incomplete_gamma` and `gamma`|
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(x,df)&space;&=&space;\int_x^{\infty}\frac{1}{2^{k/2}~\Gamma(k/2)}t^{\frac{k}{2}-1}e^{-\frac{k}{2}}dt\\&space;&=&space;1-\frac{\gamma(k/2,x/2)}{\Gamma(k/2)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(x,df)&space;&=&space;\int_x^{\infty}\frac{1}{2^{k/2}~\Gamma(k/2)}t^{\frac{k}{2}-1}e^{-\frac{k}{2}}dt\\&space;&=&space;1-\frac{\gamma(k/2,x/2)}{\Gamma(k/2)}&space;\end{align*}" title="\begin{align*} p(x,df) &= \int_x^{\infty}\frac{1}{2^{k/2}~\Gamma(k/2)}t^{\frac{k}{2}-1}e^{-\frac{k}{2}}dt\\ &= 1-\frac{\gamma(k/2,x/2)}{\Gamma(k/2)} \end{align*}" /></a>
+
 
 ## F-distribution
 
-![f_to_p](https://user-images.githubusercontent.com/44984892/85934703-0d7b7a00-b911-11ea-84cb-e940fc5630d9.png)
+![f_to_p](https://user-images.githubusercontent.com/44984892/86042311-27cc6980-ba71-11ea-91ba-62a609cfdab7.png)
 
 |function name|description|
 |:-:|:--|
-|`f_to_p(F, df1, df2)`|calculate one-tailed p-value from given `F` value and `df1``df2` by incomplete beta function|
-|`p_to_f(p, df1, df2)`|calculate F-value from one-tailed `p` value and `df1``df2` by 10 times iterations of Newton's Method|
+|`f_to_p(F, df1, df2)`|calculate one-tailed p-value from given `F` value and `df1` `df2` by `regularized_beta`|
+|`p_to_f(p, df1, df2)`|calculate F-value from one-tailed `p` value and `df1` `df2` by `inv_regularized_beta`|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" title="\begin{align*} p(f,df_1,df_2) &= 1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)} \\ &\text{where}~x =\frac{df_1f}{df_1f+df_2} \end{align*}" /></a>
 
+
 ## Poisson distribution
 
-![poisson](https://user-images.githubusercontent.com/44984892/85938399-4d555800-b937-11ea-9016-ce6549dfc131.png)
+![poisson](https://user-images.githubusercontent.com/44984892/86042353-3ca8fd00-ba71-11ea-8fee-43599b84ec6f.png)
 
 |function name|description|
 |:-:|:--|
-|`poisson(lambda, k)`|calculate Poisson Pr(X=`k`) directly from probability mass function|
-|`poisson_cum(lambda, k)`|calculate cumulative Poisson Pr(0≤X≤`k`)|
+|`poisson(lambda, k)`|calculate Poisson Pr(X=`k`) directly from probability mass function (if `k` in not an integer, use gamma function Γ(k+1) instead of factorial k!)|
+|`poisson_cum(lambda, k)`|calculate cumulative Poisson Pr(X≥`k`)|
+|`poisson_to_p(lambda, k, split=100)`|calculate p(X≥`k`) by assuming the distribution is continuous (it may take a little time to finishing calculate)|
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\leq k) &= \sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!} \end{align*}" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\geq&space;k)&space;&=&space;\sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!}&space;\\&space;p(X\geq&space;k)&space;&=&space;\int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t&plus;1)}dt&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\geq&space;k)&space;&=&space;\sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!}&space;\\&space;p(X\geq&space;k)&space;&=&space;\int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t&plus;1)}dt&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\geq k) &= \sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!} \\ p(X\geq k) &= \int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t+1)}dt \end{align*}" /></a>
 
 
 

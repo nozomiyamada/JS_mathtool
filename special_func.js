@@ -102,7 +102,7 @@ function inv_gamma(y,iter=30){
   while(gamma(x0) < y){x *= 1.5;} // find initial x0 s.t. Γ(x0)>y
   return newton(gamma,f_prime,y,x0,iter);
 }
-function inv_incomplete_gamma(s,y,x0=1,iter=30){
+function inv_incomplete_gamma(s,y,x0=s,iter=30){
   let f = function(t){return incomplete_gamma(s,t);}
   let f_prime = function(t){return Math.pow(t,s-1)*Math.exp(-t);}
   return newton(f,f_prime,y,x0,iter);
