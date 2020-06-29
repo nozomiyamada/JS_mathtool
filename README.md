@@ -7,12 +7,14 @@ JavaScript functions for mathematic calculations. Please feel free to copy and u
 
 Demo https://nozomiyamada.github.io/tool.html
 
-_note_: All codes have no exception handling (e.g. checking integer). You should be careful when you use them, or implement by yourself.
+___note___: Some codes have no exception handling (e.g. checking integer). You should be careful when you use them, or implement by yourself.
 
 - `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
 - `special_func.js` numeric analysis methods and special functions e.g. gamma, beta, erf
 - `statistics.js` functions for statistics (most of the functions depend `special_func.js`)
 - `misc.js` other various functions
+
+
 
 # `gcd_lcm.js`
 
@@ -23,6 +25,8 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 |`lcm2(a,b)`|calculate LCM of two positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
 |`lcm(nums)`|calculate LCM of all integers in array `nums`|
 
+
+
 # `special_func.js`
 
 ## numeric analysis
@@ -31,8 +35,7 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 |:-:|:--|
 |`gauss_legendre(func,a,b,split=1000,n=5)`|calculate ∫[a->b]f(x)dx by [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gaussian_quadrature) of n-th Legendre polynomial. `func` must be an explicit function that takes only one argument like f(x). `split` determines the number of intervals in the range of integration|
 |`newton(func,func_prime,y,x0,iter=15)`|solve the equation y = f(x) by using [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method). `func` and `func_prime` (derivative of `func`) must be explicit functions that take only one argument like f(x), f'(x). `x0` is an initial guess for x. You can set iteration times `iter`.|
-|`brent(func,y,a0,b0,iter=100,epsiron=1e-15)`|solve the equation y = f(x) by using [Brent's method](https://en.wikipedia.org/wiki/Brent%27s_method). `func` must be an explicit function that takes only one argument like f(x). `a0` and `b0` are initial guess for x. These two numbers must have opposite sign, otherwise the function will return `null`. You can set maximum iteration times `iter` and minimum width of step `epsiron` in each iteration.|
-
+|`brent(func,y,a0,b0,iter=100,epsiron=1e-15)`|solve the equation y = f(x) by using [Brent's method](https://en.wikipedia.org/wiki/Brent%27s_method). `func` must be an explicit function that takes only one argument like f(x). `a0` and `b0` are initial guess for x. These two numbers must have opposite sign, otherwise the function will return `NaN`. You can set maximum iteration times `iter` and minimum width of step `epsiron` in each iteration.|
 
 ~~~javascript
 >>> fx = function(x){return x**2};
@@ -55,10 +58,29 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;\int_a^bf(x)dx&space;&=&space;\frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t&plus;\frac{a&plus;b}{2}\right)dt\\&space;&\sim&space;\frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i&plus;\frac{a&plus;b}{2}\right)\\&space;&\text{where&space;$t_i$&space;is&space;the&space;i-th&space;zero&space;point&space;of&space;Legendre&space;polynomial}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;\int_a^bf(x)dx&space;&=&space;\frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t&plus;\frac{a&plus;b}{2}\right)dt\\&space;&\sim&space;\frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i&plus;\frac{a&plus;b}{2}\right)\\&space;&\text{where&space;$t_i$&space;is&space;the&space;i-th&space;zero&space;point&space;of&space;Legendre&space;polynomial}&space;\end{align*}" title="\begin{align*} \int_a^bf(x)dx &= \frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t+\frac{a+b}{2}\right)dt\\ &\sim \frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i+\frac{a+b}{2}\right)\\ &\text{where $t_i$ is the i-th zero point of Legendre polynomial} \end{align*}" /></a>
 
-
 > Newton's Method
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" title="x_{n+1} = x_n + \frac{y-f(x_n)}{f'(x_n)}" /></a>
+
+
+## Gauss error function
+
+|function name|description|
+|:-:|:--|
+|`erf(z,split=1e3,n=5)`|calculate Gauss error function y = erf(z) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`erfc(z,split=1e3,n=5)`|calculate complementary error function y = erfc(z) = 1 - erf(z) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`inv_erf(y,iter=30)`|calculate inverse error function z = ierf(y) by Newton's Method (initial x<sub>0</sub>  is selected automatically)|
+|`erf2(z, N=100)`|calculate Gauss error function y = erf(z) by Taylor expansion up to `N`-th order|
+|`inv_erf2(y, N=300)`|calculate inverse error function z = ierf(y) by Taylor expansion up to `N`-th order|
+
+> Gauss error function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;{\rm&space;erf}(z)&space;&=&space;\frac{2}{\sqrt{\pi}}\int_{0}^{z}e^{-t^2}dt&space;\\&space;&=&space;\frac{2}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z}{2n&plus;1}\prod_{k=1}^{n}\frac{-z^2}{k}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;{\rm&space;erf}(z)&space;&=&space;\frac{2}{\sqrt{\pi}}\int_{0}^{z}e^{-t^2}dt&space;\\&space;&=&space;\frac{2}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z}{2n&plus;1}\prod_{k=1}^{n}\frac{-z^2}{k}&space;\end{align*}" title="\begin{align*} {\rm erf}(z) &= \frac{2}{\sqrt{\pi}}\int_{0}^{z}e^{-t^2}dt \\ &= \frac{2}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z}{2n+1}\prod_{k=1}^{n}\frac{-z^2}{k} \end{align*}" /></a>
+
+> inverse error function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;{\rm&space;erf}^{-1}(y)&space;&=&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\frac{\sqrt{\pi}}{2}y)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;{\rm&space;erf}^{-1}(y)&space;&=&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\frac{\sqrt{\pi}}{2}y)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" title="\begin{align*} {\rm erf}^{-1}(y) &= \sum_{n=0}^{N}\frac{C_k}{2k+1}(\frac{\sqrt{\pi}}{2}y)^{2k+1} \\ &\text{where}~C_k = \sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m+1)(2m+1)} \end{align*}" /></a>
+
 
 ## gamma function
 
@@ -68,9 +90,59 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`Euler_const`|Euler's constant γ = 0.5772156649015328606|
 |`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`inv_gamma(y,iter=30)`|calculate inverse gamma s = Γ<sup>-1</sup>(y) by Newton's Method (initial s<sub>0</sub> is searched automatically)|
+|`inv_gamma(y,iter=30)`|calculate inverse gamma s = Γ<sup>-1</sup>(y) by Newton's Method (initial s<sub>0</sub> is selected automatically)|
 |`inv_incomplete_gamma(s,y,x0=1,iter=30)`|calculate inverse complete gamma x = γ<sup>-1</sup>(s,y) by Newton's Method (initial x<sub>0</sub>  = 1)|
-|`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
+|`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma` if `N` is not enough)|
+
+> gamma function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\Gamma(s)&space;=&space;(s-1)!&space;=&space;\int_0^{\infty}&space;t^{s-1}e^{-t}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Gamma(s)&space;=&space;(s-1)!&space;=&space;\int_0^{\infty}&space;t^{s-1}e^{-t}dt" title="\Gamma(s) = (s-1)! = \int_0^{\infty} t^{s-1}e^{-t}dt" /></a>
+
+> lower imcomplete gamma function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\gamma(s,x)&space;=&space;\int_0^x&space;t^{s-1}e^{-t}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma(s,x)&space;=&space;\int_0^x&space;t^{s-1}e^{-t}dt" title="\gamma(s,x) = \int_0^x t^{s-1}e^{-t}dt" /></a>
+
+> Weierstrass's definition
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" title="\begin{align*} \frac{1}{\Gamma(s)} &= se^{\gamma s}\prod_{m=1}^{\infty}(1+\frac{s}{m})e^{-s/m} \\ -\log\Gamma(s) &\sim \log s+\gamma s + \sum_{m=1}^{N}\left(\log(1+\frac{s}{m})-\frac{s}{m}\right) \end{align*}" /></a>
+
+
+## beta function
+
+|function name|description|
+|:-:|:--|
+|`beta(a,b,split=1e3,n=5)`|calculate beta function B(a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`incomplete_beta(a,b,x,split=1e3,n=5)`|calculate incomplete beta function B(x;a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`regularized_beta(a,b,x,split=1e3,n=5)`|calculate regularized incomplete beta function y = I<sub>x</sub>(a,b) = B(x;a,b)/B(a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`inv_regularized_beta(a,b,y,iter=30)`|calculate inverse regularized incomplete x = I<sup>-1</sup>(y;a,b) by Newton's Method (initial x<sub>0</sub>  is selected automatically)|
+
+> beta function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=B(a,b)&space;=&space;\int_0^1&space;t^{a-1}(1-t)^{b-1}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?B(a,b)&space;=&space;\int_0^1&space;t^{a-1}(1-t)^{b-1}dt" title="B(a,b) = \int_0^1 t^{a-1}(1-t)^{b-1}dt" /></a>
+
+> incomplete beta function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=B(x;a,b)&space;=&space;\int_0^x&space;t^{a-1}(1-t)^{b-1}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?B(x;a,b)&space;=&space;\int_0^x&space;t^{a-1}(1-t)^{b-1}dt" title="B(x;a,b) = \int_0^x t^{a-1}(1-t)^{b-1}dt" /></a>
+
+> regularized incomplete beta function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=I_x(a,b)&space;=&space;\frac{B(x;a,b)}{B(a,b)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?I_x(a,b)&space;=&space;\frac{B(x;a,b)}{B(a,b)}" title="I_x(a,b) = \frac{B(x;a,b)}{B(a,b)}" /></a>
+
+
+## supplementary functions
+
+|function name|description|
+|:-:|:--|
+|`round(num,decimal=0)`|same as the Python function `round()`|
+|`sigmoid(x)`|calculate sigmoid function|
+|`combination(n,k)`|calculate combinations C(n,k)|
+|`permutation(n,k)`|calculate permutations P(n,k)|
+
+> sigmoid function
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=S(x)&space;=&space;\frac{1}{1&plus;e^{-x}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?S(x)&space;=&space;\frac{1}{1&plus;e^{-x}}" title="S(x) = \frac{1}{1+e^{-x}}" /></a>
+
+
 
 # `statistics.js`
 
@@ -80,13 +152,13 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 |function name|description|
 |:-:|:--|
-|`z_to_p(z, N=100)`|calculate one-tailed p(z≤x) from `z` score by Taylor expansion up to `N`-th order|
-|`p_to_z(p, iter=20)`|calculate z-score from one-tailed `p`(z≤x) by `iter` times iterations of Newton's Method|
-|`p_to_z2(p, N=300)`|calculate z-score from one-tailed `p`(z≤x) by Taylor expansion up to `N`-th order|
+|`z_to_p(z, taylor=false)`|calculate one-tailed p(z≤x) from `z` score by `erf(z)` or `erf2(z)`, where z must be in the range [0,∞)|
+|`p_to_z(p, taylor=false)`|calculate z-score from one-tailed `p`(z≤x) by `inv_erf(z)` or `inv_erf2(z)`, where p must be in the range [0,0.5]|
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(z&space;\leq&space;x)&space;&=&space;\frac{1}{2}&space;-&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{2}~{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&\sim&space;\frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(z&space;\leq&space;x)&space;&=&space;\frac{1}{2}&space;-&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{2}~{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&\sim&space;\frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" title="\begin{align*} p(z \leq x) &= \frac{1}{2} - \frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx \\ &= \frac{1}{2}-\frac{1}{2}~{\rm erf}(z/\sqrt{2}) \\ &\sim \frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{N}\frac{z/\sqrt{2}}{2n+1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k} \end{align*}" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(z&space;\leq&space;x)&space;&=&space;\frac{1}{2}&space;-&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{2}~{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(z&space;\leq&space;x)&space;&=&space;\frac{1}{2}&space;-&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{2}~{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" title="\begin{align*} p(z \leq x) &= \frac{1}{2} - \frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx \\ &= \frac{1}{2}-\frac{1}{2}~{\rm erf}(z/\sqrt{2}) \\ &= \frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z/\sqrt{2}}{2n+1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k} \end{align*}" /></a>
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;z(p)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2p)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\sqrt{\pi}p)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;z(p)&space;&=&space;\sqrt{2}~{\rm&space;erf}^{-1}(2p)&space;\\&space;&\sim&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\sqrt{\pi}p)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" title="\begin{align*} z(p) &= \sqrt{2}~{\rm erf}^{-1}(2p) \\ &\sim \sum_{n=0}^{N}\frac{C_k}{2k+1}(\sqrt{\pi}p)^{2k+1} \\ &\text{where}~C_k = \sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m+1)(2m+1)} \end{align*}" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=z(p)&space;=&space;\sqrt{2}~{\rm&space;erf}^{-1}(1-2p)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?z(p)&space;=&space;\sqrt{2}~{\rm&space;erf}^{-1}(1-2p)" title="z(p) = \sqrt{2}~{\rm erf}^{-1}(1-2p)" /></a>
+
 
 ## t-distribution
 
@@ -121,41 +193,7 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\leq&space;k)&space;&=&space;\sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!}&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\leq k) &= \sum_{n=0}^{k}\frac{\lambda^ne^{-\lambda}}{n!} \end{align*}" /></a>
 
-## supplementary functions
 
-|function name|description|
-|:-:|:--|
-|`fact(n)`|calculate factorial n! , `n` must be an integer|
-|`round(num,decimal=0)`|same as the Python function `round()`|
-
-|`beta(a,b,split=1e3,n=5)`|calculate beta function B(a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`incomplete_beta(a,b,x,split=1e3,n=5)`|calculate beta function B(x;a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`sigmoid(x)`|calculate sigmoid function|
-
-
-> gamma function
-
-<a href="https://www.codecogs.com/eqnedit.php?latex=\Gamma(s)&space;=&space;(s-1)!&space;=&space;\int_0^{\infty}&space;t^{s-1}e^{-t}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Gamma(s)&space;=&space;(s-1)!&space;=&space;\int_0^{\infty}&space;t^{s-1}e^{-t}dt" title="\Gamma(s) = (s-1)! = \int_0^{\infty} t^{s-1}e^{-t}dt" /></a>
-
-> Weierstrass's definition
-
-<a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" title="\begin{align*} \frac{1}{\Gamma(s)} &= se^{\gamma s}\prod_{m=1}^{\infty}(1+\frac{s}{m})e^{-s/m} \\ -\log\Gamma(s) &\sim \log s+\gamma s + \sum_{m=1}^{N}\left(\log(1+\frac{s}{m})-\frac{s}{m}\right) \end{align*}" /></a>
-
-> lower imcomplete gamma function
-
-<a href="https://www.codecogs.com/eqnedit.php?latex=\gamma(s,x)&space;=&space;\int_0^x&space;t^{s-1}e^{-t}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\gamma(s,x)&space;=&space;\int_0^x&space;t^{s-1}e^{-t}dt" title="\gamma(s,x) = \int_0^x t^{s-1}e^{-t}dt" /></a>
-
-> beta function
-
-<a href="https://www.codecogs.com/eqnedit.php?latex=B(a,b)&space;=&space;\int_0^1&space;t^{a-1}(1-t)^{b-1}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?B(a,b)&space;=&space;\int_0^1&space;t^{a-1}(1-t)^{b-1}dt" title="B(a,b) = \int_0^1 t^{a-1}(1-t)^{b-1}dt" /></a>
-
-> incomplete beta function
-
-<a href="https://www.codecogs.com/eqnedit.php?latex=B(x;a,b)&space;=&space;\int_0^x&space;t^{a-1}(1-t)^{b-1}dt" target="_blank"><img src="https://latex.codecogs.com/gif.latex?B(x;a,b)&space;=&space;\int_0^x&space;t^{a-1}(1-t)^{b-1}dt" title="B(x;a,b) = \int_0^x t^{a-1}(1-t)^{b-1}dt" /></a>
-
-> sigmoid function
-
-<a href="https://www.codecogs.com/eqnedit.php?latex=S(x)&space;=&space;\frac{1}{1&plus;e^{-x}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?S(x)&space;=&space;\frac{1}{1&plus;e^{-x}}" title="S(x) = \frac{1}{1+e^{-x}}" /></a>
 
 
 ## `misc.js`
