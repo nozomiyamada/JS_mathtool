@@ -68,7 +68,8 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`Euler_const`|Euler's constant γ = 0.5772156649015328606|
 |`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`inv_gamma(y,iter=30)`|calculate inverse gamma Γ<sup>-1</sup>(y)=s by Newton's Method|
+|`inv_gamma(y,iter=30)`|calculate inverse gamma s = Γ<sup>-1</sup>(y) by Newton's Method (initial s<sub>0</sub> is searched automatically)|
+|`inv_incomplete_gamma(s,y,x0=1,iter=30)`|calculate inverse complete gamma x = γ<sup>-1</sup>(s,y) by Newton's Method (initial x<sub>0</sub>  = 1)|
 |`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
 
 # `statistics.js`
