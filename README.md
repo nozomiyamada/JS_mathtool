@@ -11,7 +11,7 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 
 - `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
 - `special_func.js` numeric analysis methods and special functions e.g. gamma, beta, erf
-- `statistics.js` functions for numeric analisys and statistics
+- `statistics.js` functions for statistics (most of the functions depend `special_func.js`)
 - `misc.js` other various functions
 
 # `gcd_lcm.js`
@@ -23,7 +23,7 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 |`lcm2(a,b)`|calculate LCM of two positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
 |`lcm(nums)`|calculate LCM of all integers in array `nums`|
 
-# `statistics.js`
+# `special_func.js`
 
 ## numeric analysis
 
@@ -68,9 +68,10 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`Euler_const`|Euler's constant γ = 0.5772156649015328606|
 |`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`inv_gamma()`||
+|`inv_gamma(y,iter=30)`|calculate inverse gamma Γ<sup>-1</sup>(y)=s by Newton's Method|
 |`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
 
+# `statistics.js`
 
 ## normal distribution
 
