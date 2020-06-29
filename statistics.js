@@ -16,6 +16,12 @@ function round(num, decimal=0){
   return Math.round(num * (10**decimal)) / (10**decimal)
 }
 
+// sigmoid function
+function sigmoid(x){
+  return 1/(1+Math.exp(-x))
+}
+
+
 
 ////////// statistics /////////////
 
@@ -169,20 +175,54 @@ function poisson_cum(lambda, k){
   return sum
 }
 
+
+////////// special functions //////////
+
+
 /**
- * gamma function with Gauss-Legendre
+ * error function
+ * @param {*} x upper limit of integral
+ * @param {*} split the number of intervals
+ * @param {*} n order of Legendre polynomial
+ */
+function erf(x,split=1e3,n=5){
+  let func = function(t){return Math.exp(-1*t*t);};
+  return gauss_legendre(func,0,x,split,n) * 2 / Math.sqrt(Math.PI);
+}
+
+
+/**
+ * gamma function & lower incomplete gamma by Gauss-Legendre
  * @param {Number} s independent variable
+ * @param {Number} x upper limit of integral
  * @param {Int} split the number of intervals
  * @param {Int} n order of Legendre polynomial
  */
 function gamma(s,split=1e3,n=5){
-  let ig = function(t){
-    return Math.pow(t,s-1)*Math.exp(-t)
-  } 
-  return gauss_legendre(0,s*10,ig,split,n);
+  let func = function(t){return Math.pow(t,s-1)*Math.exp(-t);}; 
+  return gauss_legendre(func,0,s*10,split,n); // must not integrate up to infinity
 }
+function incomplete_gamma(s,x,split=1e3,n=5){
+  let func = function(t){return Math.pow(t,s-1)*Math.exp(-t);}; 
+  return gauss_legendre(func,0,x,split,n);
+}
+function inv_gamma(y,iter=30){
+  let f_prime = function(s){
+    let func = function(t){return Math.log(s)*Math.pow(t,s-1)*Math.exp(-t);}; 
+    return gauss_legendre(func,0,s*10);
+  };
+  let x0 = 2;
+  while(gamma(x0) < y){x *= 1.5;} // find initial x0 s.t. Γ(x0)>y
+  return newton(gamma,f_prime,y,x0,iter);
+}
+function inv_incomplete_gamma(s,y,x0=1,iter=30){
+  let f = function(t){return incomplete_gamma(s,t);};
+  let f_prime = function(t){return Math.pow(t,s-1)*Math.exp(-t);};
+  return newton(f,f_prime,y,x0,iter);
+}
+
 /**
- * Gamma Function with Weierstrass's definition
+ * gamma function by Weierstrass's definition
  * @param {Number} s independent variable
  * @param {Int} N upper limit of series
  */
@@ -195,19 +235,6 @@ function gamma2(s, N=1e5){
   return Math.exp(-sum)
 }
 
-/**
- * lower incomplete gamma function with Gauss-Legendre
- * @param {Number} s independent variable
- * @param {Number} x upper limit of integral
- * @param {Int} split the number of intervals
- * @param {Int} n order of Legendre polynomial
- */
-function incomplete_gamma(s,x,split=1e3,n=5){
-  let ig = function(t){
-    return Math.pow(t,s-1)*Math.exp(-t)
-  } 
-  return gauss_legendre(0,x,ig,split,n)
-}
 
 /**
  * Beta Function
@@ -218,29 +245,24 @@ function incomplete_gamma(s,x,split=1e3,n=5){
  * @param {Int} n order of Legendre polynomial
  */
 function beta(a,b,split=1e3,n=5){
-  let func = function(t){
-    return Math.pow(t,a-1) * Math.pow((1-t),b-1)
-  }
-  return gauss_legendre(0,1,func,split,n)
+  let func = function(t){return Math.pow(t,a-1) * Math.pow((1-t),b-1);};
+  return gauss_legendre(func,0,1,split,n);
 }
 function incomplete_beta(a,b,x,split=1e3,n=5){
-  let func = function(t){
-    return Math.pow(t,a-1) * Math.pow((1-t),b-1)
-  }
-  return gauss_legendre(0,x,func,split,n)
+  let func = function(t){return Math.pow(t,a-1) * Math.pow((1-t),b-1);};
+  return gauss_legendre(func,0,x,split,n);
 }
 
-/**
- * sigmoid function
- */
-function sigmoid(x){
-  return 1/(1+Math.exp(-x))
-}
 
-////////// Gauss-Legendre //////////
+
+
+
+////////// methods for numeric analysis ////////// 
+
+///// Gauss-Legendre quadrature /////
 
 // weights[n] = [[zero point x_i, weight w_i],..]
-const weights = {
+const GL_weights = {
   2:[[0.57735026918962576451,1.0],
     [0.57735026918962576451,1.0]],
   3:[[-0.77459666924148337704,0.55555555555555555552],
@@ -271,17 +293,17 @@ const weights = {
   }
 
 /**
- * 
+ * gauss legendre quadrature
+ * @param {Function} func function to be integrated
  * @param {Number} a lower limit of integral
  * @param {Number} b upper limit of integral
- * @param {Function} func function to be integrated
- * @param {Int} split the number of intervals
- * @param {Number} n order of polynomial
+ * @param {Int} split the number of intervals, default=1000
+ * @param {Number} n order of Legendre polynomial, default=5
  */
-function gauss_legendre(a,b,func,split=1000,n=5){
-  let cum_sum = 0;
-  let weight = weights[n];
-  let dx = (b-a)/split;
+function gauss_legendre(func,a,b,split=1000,n=5){
+  let cum_sum = 0; // total area
+  let weight = GL_weights[n]; // coef
+  let dx = (b-a)/split; // width of each interval
   for(var i=0;i<split;i++){
     var q = dx/2;
     var r = (2*i+1)*dx/2;
@@ -292,4 +314,89 @@ function gauss_legendre(a,b,func,split=1000,n=5){
     cum_sum += sum * q;
   }
   return cum_sum
+}
+
+///// Newton's Method /////
+
+/**
+ * solve y = f(x) by Newton's Method
+ * x1 = x0 + (y-f(x0))/f'(x0)
+ * @param {Function} func function to be analysed
+ * @param {Function} func_prime derivative of the function
+ * @param {Number} y value of the function 
+ * @param {Number} x0 initial guess for x
+ * @param {Int} iter the number of max iteration, default = 30
+ */
+function newton(func,func_prime,y,x0,iter=30){
+  let x = x0;
+  for(var i=0;i<iter;i++){
+    x += (y-func(x))/func_prime(x)
+    if(Math.abs(y-func(x))<1e-12){console.log(`iteration: ${i}/${iter}`);break;}
+  }
+  return x;
+}
+
+///// Brent's Method /////
+/**
+ * solve y = f(x) by Brent's Method
+ * does not need f'(x)
+ * @param {Number} y value of the function 
+ * @param {Number} a0 opposite point of b0
+ * @param {Number} b0 initial guess for x
+ * @param {Function} func function to be analysed
+ * @param {Int} iter the number of max iteration, default = 200
+ * @param {Number} epsiron minimum width of each step
+ */
+function brent(func,y,a0,b0,iter=200,epsiron=1e-15){
+  let f = function(x){return func(x)-y}; // redefine f(x) = 0
+  if(f(a0)*f(b0)>0){ // a0 and b0 must have opposite sign
+    return null;
+  }else{
+    if(f(a0)<f(b0)){[a0,b0] = [b0,a0];} // b0 must be less than a0
+    let a = a0; b = [a0, a0, b0] // initialize
+    let bisection = true  // method of previous step
+    for(var i=0;i<iter;i++){
+      s = b[2] - (b[2]-b[1])/(f(b[2])-f(b[1]))*f(b[2]); // interpolation
+      m = (a+b[2])/2;  // bisection
+      // determine whether to use interpolation
+      if((b[2]<s<m || m<s<b[2]) && bisection){ // previous step = bisection
+        if(Math.abs(b[2]-b[1])>epsiron && Math.abs(s-b[2])>Math.abs(b[2]-b[1])/2){
+          b[0]=b[1]; b[1]=b[2]; b[2]=s; // update b with interpolation
+          bisection = false;
+        }else{
+          b[0]=b[1]; b[1]=b[2]; b[2]=m; // update b with bisection
+          bisection = true;
+        }
+      }else if((b[2]<s<m || m<s<b[2]) && !bisection){ // previous step = interpolation
+        if(Math.abs(b[1]-b[0])>epsiron && Math.abs(s-b[2])>Math.abs(b[1]-b[0])/2){
+          b[0]=b[1]; b[1]=b[2]; b[2]=s; // update b with interpolation
+          bisection = false;
+        }else{
+          b[0]=b[1]; b[1]=b[2]; b[2]=m; // update b with bisection
+          bisection = true;
+        }
+      }else{  // update b with bisection
+        b[0]=b[1]; b[1]=b[2]; b[2]=m;
+        bisection = true;
+      }
+      if(f(a)*f(b[2])>0){a=b[1];} // update a 
+      if(f(a)<f(b[2])){[a,b[2]] = [b[2],a];} // exchange if f(a) < f(b)
+      if(Math.abs(f(b[2]))<1e-12){
+        console.log(`iteration: ${i}/${iter}`); break;
+      }
+    }
+    return b[2];
+  }
+}
+
+fc = function(x){
+  return x*x*x;
+}
+
+func = function(x){
+  return x**2 + 1
+}
+
+func1 = function(x){
+  return 2*x
 }
