@@ -1,6 +1,9 @@
 // GCD of 2 numbers (euclidean algorithm)
 // a, b must be integers
 function gcd2(a,b){
+  if(!Number.isInteger(a)||!Number.isInteger(b)){
+    return NaN;
+  }
   if(a < b){
     [a, b] = [b, a];
   }
