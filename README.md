@@ -1,6 +1,6 @@
 # JS_mathtool
 
-JavaScript functions for mathematic calculations. Please feel free to use them.
+JavaScript functions for mathematic calculations. Please feel free to copy and use.
 
 **"not very precise, but simple and fast enough"** (guarantee at least 5 significant digits)
 
@@ -10,6 +10,7 @@ Demo https://nozomiyamada.github.io/tool.html
 _note_: All codes have no exception handling (e.g. checking integer). You should be careful when you use them, or implement by yourself.
 
 - `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
+- `special_func.js` numeric analysis methods and special functions e.g. gamma, beta, erf
 - `statistics.js` functions for numeric analisys and statistics
 - `misc.js` other various functions
 
@@ -28,9 +29,9 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 
 |function name|description|
 |:-:|:--|
-|`gauss_legendre(a,b,func,split=1000,n=5)`|calculate ∫[a->b]f(x)dx by [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gaussian_quadrature) of n-th Legendre polynomial. `func` must be an explicit function that takes only one argument like f(x). `split` determines the number of intervals in the range of integration|
-|`newton(y,x0,func,func_prime,iter=15)`|solve the equation y = f(x) by using [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method). `func` and `func_prime` (derivative of `func`) must be explicit functions that take only one argument like f(x), f'(x). `x0` is an initial guess for x. You can set iteration times `iter`.|
-|`brent(y,a0,b0,func,iter=100,epsiron=1e-15)`|solve the equation y = f(x) by using [Brent's method](https://en.wikipedia.org/wiki/Brent%27s_method). `func` must be an explicit function that takes only one argument like f(x). `a0` and `b0` are initial guess for x. These two numbers must have opposite sign, otherwise the function will return `null`. You can set maximum iteration times `iter` and minimum width of step `epsiron` in each iteration.|
+|`gauss_legendre(func,a,b,split=1000,n=5)`|calculate ∫[a->b]f(x)dx by [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gaussian_quadrature) of n-th Legendre polynomial. `func` must be an explicit function that takes only one argument like f(x). `split` determines the number of intervals in the range of integration|
+|`newton(func,func_prime,y,x0,iter=15)`|solve the equation y = f(x) by using [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method). `func` and `func_prime` (derivative of `func`) must be explicit functions that take only one argument like f(x), f'(x). `x0` is an initial guess for x. You can set iteration times `iter`.|
+|`brent(func,y,a0,b0,iter=100,epsiron=1e-15)`|solve the equation y = f(x) by using [Brent's method](https://en.wikipedia.org/wiki/Brent%27s_method). `func` must be an explicit function that takes only one argument like f(x). `a0` and `b0` are initial guess for x. These two numbers must have opposite sign, otherwise the function will return `null`. You can set maximum iteration times `iter` and minimum width of step `epsiron` in each iteration.|
 
 
 ~~~javascript
@@ -45,10 +46,10 @@ _note_: All codes have no exception handling (e.g. checking integer). You should
 
 >>> f = function(x){return x**3};
 >>> brent(8,-1,6,f);
-3
+2
 ~~~
 
-Both `newton` and `brent` will abort the process when error is below 1e-15 and output the total iteration times on the console.
+Both `newton` and `brent` will abort the process when error is below **1e-12** and output the total iteration times on the console.
 
 > Gauss-Legendre quadrature
 
@@ -58,6 +59,17 @@ Both `newton` and `brent` will abort the process when error is below 1e-15 and o
 > Newton's Method
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" title="x_{n+1} = x_n + \frac{y-f(x_n)}{f'(x_n)}" /></a>
+
+## gamma function
+
+|function name|description|
+|:-:|:--|
+|`fact(n)`|calculate factorial n! , `n` must be an integer|
+|`Euler_const`|Euler's constant γ = 0.5772156649015328606|
+|`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+|`inv_gamma()`||
+|`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
 
 
 ## normal distribution
@@ -113,10 +125,7 @@ Both `newton` and `brent` will abort the process when error is below 1e-15 and o
 |:-:|:--|
 |`fact(n)`|calculate factorial n! , `n` must be an integer|
 |`round(num,decimal=0)`|same as the Python function `round()`|
-|`Euler_const`|Euler's constant γ = 0.5772156649015328606|
-|`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
-|`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma`)|
-|`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
+
 |`beta(a,b,split=1e3,n=5)`|calculate beta function B(a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`incomplete_beta(a,b,x,split=1e3,n=5)`|calculate beta function B(x;a,b) by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`sigmoid(x)`|calculate sigmoid function|
