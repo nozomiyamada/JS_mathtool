@@ -103,7 +103,7 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`inv_gamma(y,iter=30)`|calculate inverse gamma s = Γ<sup>-1</sup>(y) by Newton's Method (initial s<sub>0</sub> is selected automatically)|
-|`inv_incomplete_gamma(s,y,x0=1,iter=30)`|calculate inverse complete gamma x = γ<sup>-1</sup>(s,y) by Newton's Method (default initial x<sub>0</sub>  = s)|
+|`inv_incomplete_gamma(s,y,x0=s,iter=30)`|calculate inverse complete gamma x = γ<sup>-1</sup>(s,y) by Newton's Method (default initial x<sub>0</sub> = s)|
 |`gamma2(s,N=1e6)`|calculate Γ(s) = (s-1)! by Weierstrass's definition up to N-th order (slower and less precise than `gamma` if `N` is not enough)|
 
 > gamma function
