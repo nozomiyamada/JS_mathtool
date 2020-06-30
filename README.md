@@ -164,6 +164,21 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 # `statistics.js`
 
+## statistics values
+
+<details>
+
+|function name|description|
+|:-:|:--|
+|`mean(nums)`|calculate mean of `nums`|
+|`median(nums)`|calculate median of `nums`|
+|`variance(nums, unbiased=true)`|calculate unbiased/biased variance of `nums`|
+|`std(nums, unbiased=true)`|calculate unbiased/biased standard deviation of `nums`|
+|`skewness(arr, regularize=false)`|calculate skewness of `nums`, use equation √(N-1)/(N-2) * sk instead if `regularize==true`|
+
+</details>
+
+
 ## normal distribution
 
 <details>
