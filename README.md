@@ -1,13 +1,15 @@
 # JS_mathtool
 
-JavaScript functions for mathematic calculations. Please feel free to copy and use.
+JavaScript functions for mathematic calculations that don't require any background programs. Please feel free to copy and use them. 
 
 **"not very precise, but simple and fast enough"** (guarantee at least 6 significant digits)
 
 
 Demo https://nozomiyamada.github.io/tool.html
 
-___note___: Some codes have no exception handling (e.g. checking integer). You should be careful when you use them, or implement by yourself. If you want to analyze data on Python (Scipy) or R, you don't have to use my functions at all, because they are more precise and convenient.
+___note___: Some codes have no exception handling (e.g. checking integer). You should be careful when you use them, or implement by yourself. If you want to analyze data on Python (Scipy) or R, you don't have to use my functions at all, because they are more precise and convenient. Or, you can use this instead -> [math.js](https://mathjs.org/)
+
+### .js files
 
 - `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
 - `special_func.js` numeric analysis methods and special functions e.g. gamma, beta, erf
@@ -164,19 +166,25 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 ## normal distribution
 
+<details>
+
 ![z_to_p](https://user-images.githubusercontent.com/44984892/85935209-7dd9c980-b918-11ea-9763-b93469034964.png)
 
 |function name|description|
 |:-:|:--|
-|`z_to_p(z, taylor=false)`|calculate one-tailed p(z≤x) from `z` score by `erf(z)` or `erf2(z)`, where z must be in the range [0,∞)|
-|`p_to_z(p, taylor=false)`|calculate z-score from one-tailed `p`(z≤x) by `inv_erf(z)` or `inv_erf2(z)`, where p must be in the range [0,0.5]|
+|`z_to_p(z, taylor=false)`|calculate one-tailed p(z≤x) from `z` score by `erf(z)` (when `taylor==false`) or `erf2(z)` (when `taylor==true`), where z must be in the range [0,∞)|
+|`p_to_z(p, taylor=false)`|calculate z-score from one-tailed `p`(z≤x) by `inv_erf(z)` (when `taylor==false`) or `inv_erf2(z)` (when `taylor==true`), where p must be in the range [0,0.5]|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(z&space;\leq&space;x)&space;&=&space;\frac{1}{2}&space;-&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{2}~{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(z&space;\leq&space;x)&space;&=&space;\frac{1}{2}&space;-&space;\frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{2}~{\rm&space;erf}(z/\sqrt{2})&space;\\&space;&=&space;\frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z/\sqrt{2}}{2n&plus;1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}&space;\end{align*}" title="\begin{align*} p(z \leq x) &= \frac{1}{2} - \frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx \\ &= \frac{1}{2}-\frac{1}{2}~{\rm erf}(z/\sqrt{2}) \\ &= \frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z/\sqrt{2}}{2n+1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k} \end{align*}" /></a>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=z(p)&space;=&space;\sqrt{2}~{\rm&space;erf}^{-1}(1-2p)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?z(p)&space;=&space;\sqrt{2}~{\rm&space;erf}^{-1}(1-2p)" title="z(p) = \sqrt{2}~{\rm erf}^{-1}(1-2p)" /></a>
 
+</details>
+
 
 ## t-distribution
+
+<details>
 
 ![t_to_p](https://user-images.githubusercontent.com/44984892/86042285-20a55b80-ba71-11ea-9565-dd276dfb9add.png)
 
@@ -187,8 +195,12 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(t,df)&space;&=&space;\int_t^{\infty}\frac{\Gamma((df&plus;1)/2)}{\sqrt{df\cdot\pi}~\Gamma(df/2)}\left(1&plus;\frac{s^2}{df}\right)^{-\frac{df&plus;1}{2}}ds\\&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(t,df)&space;&=&space;\int_t^{\infty}\frac{\Gamma((df&plus;1)/2)}{\sqrt{df\cdot\pi}~\Gamma(df/2)}\left(1&plus;\frac{s^2}{df}\right)^{-\frac{df&plus;1}{2}}ds\\&space;&=&space;1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)}&space;\\&space;&\text{where}~x&space;=\frac{t&plus;\sqrt{t^2&plus;df}}{2\sqrt{t^2&plus;df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}&space;\end{align*}" title="\begin{align*} p(t,df) &= \int_t^{\infty}\frac{\Gamma((df+1)/2)}{\sqrt{df\cdot\pi}~\Gamma(df/2)}\left(1+\frac{s^2}{df}\right)^{-\frac{df+1}{2}}ds\\ &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\ &\text{where}~x =\frac{t+\sqrt{t^2+df}}{2\sqrt{t^2+df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}} \end{align*}" /></a>
 
+</details>
+
 
 ## χ<sup>2</sup>-distribution 
+
+<details>
 
 ![chi2_to_p](https://user-images.githubusercontent.com/44984892/86042339-36b31c00-ba71-11ea-9970-de2dc4494166.png)
 
@@ -199,8 +211,12 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(x,df)&space;&=&space;\int_x^{\infty}\frac{1}{2^{k/2}~\Gamma(k/2)}t^{\frac{k}{2}-1}e^{-\frac{k}{2}}dt\\&space;&=&space;1-\frac{\gamma(k/2,x/2)}{\Gamma(k/2)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(x,df)&space;&=&space;\int_x^{\infty}\frac{1}{2^{k/2}~\Gamma(k/2)}t^{\frac{k}{2}-1}e^{-\frac{k}{2}}dt\\&space;&=&space;1-\frac{\gamma(k/2,x/2)}{\Gamma(k/2)}&space;\end{align*}" title="\begin{align*} p(x,df) &= \int_x^{\infty}\frac{1}{2^{k/2}~\Gamma(k/2)}t^{\frac{k}{2}-1}e^{-\frac{k}{2}}dt\\ &= 1-\frac{\gamma(k/2,x/2)}{\Gamma(k/2)} \end{align*}" /></a>
 
+</details>
+
 
 ## F-distribution
+
+<details>
 
 ![f_to_p](https://user-images.githubusercontent.com/44984892/86042311-27cc6980-ba71-11ea-91ba-62a609cfdab7.png)
 
@@ -211,8 +227,12 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;p(f,df_1,df_2)&space;&=&space;1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)}&space;\\&space;&\text{where}~x&space;=\frac{df_1f}{df_1f&plus;df_2}&space;\end{align*}" title="\begin{align*} p(f,df_1,df_2) &= 1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)} \\ &\text{where}~x =\frac{df_1f}{df_1f+df_2} \end{align*}" /></a>
 
+</details>
+
 
 ## Poisson distribution
+
+<details>
 
 ![poisson](https://user-images.githubusercontent.com/44984892/86042353-3ca8fd00-ba71-11ea-8fee-43599b84ec6f.png)
 
@@ -224,7 +244,7 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\geq&space;k)&space;&=&space;\sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!}&space;\\&space;p(X\geq&space;k)&space;&=&space;\int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t&plus;1)}dt&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\geq&space;k)&space;&=&space;\sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!}&space;\\&space;p(X\geq&space;k)&space;&=&space;\int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t&plus;1)}dt&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\geq k) &= \sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!} \\ p(X\geq k) &= \int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t+1)}dt \end{align*}" /></a>
 
-
+</details>
 
 
 ## `misc.js`
