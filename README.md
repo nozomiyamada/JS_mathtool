@@ -174,7 +174,9 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`median(nums)`|calculate median of `nums`|
 |`variance(nums, unbiased=true)`|calculate unbiased/biased variance of `nums`|
 |`std(nums, unbiased=true)`|calculate unbiased/biased standard deviation of `nums`|
+|`sem(nums)`|calculate SEM (standard error of mean: s/√n) of `nums`|
 |`skewness(arr, regularize=false)`|calculate skewness of `nums`, use equation √(N-1)/(N-2) * sk instead if `regularize==true`|
+|`welch(arr1, arr2)`|calculate Welch's t-value and df from `arr1` and `arr2`|
 
 </details>
 
