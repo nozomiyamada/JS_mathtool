@@ -31,6 +31,8 @@ ___note___: Some codes have no exception handling (e.g. checking integer). You s
 
 ## numeric analysis
 
+<details>
+
 |function name|description|
 |:-:|:--|
 |`gauss_legendre(func,a,b,split=1000,n=5)`|calculate ∫[a->b]f(x)dx by [Gauss-Legendre quadrature](https://en.wikipedia.org/wiki/Gaussian_quadrature) of n-th Legendre polynomial. `func` must be an explicit function that takes only one argument like f(x). `split` determines the number of intervals in the range of integration|
@@ -62,8 +64,12 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?x_{n&plus;1}&space;=&space;x_n&space;&plus;&space;\frac{y-f(x_n)}{f'(x_n)}" title="x_{n+1} = x_n + \frac{y-f(x_n)}{f'(x_n)}" /></a>
 
+</details>
+
 
 ## Gauss error function
+
+<details>
 
 |function name|description|
 |:-:|:--|
@@ -81,8 +87,12 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;{\rm&space;erf}^{-1}(y)&space;&=&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\frac{\sqrt{\pi}}{2}y)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;{\rm&space;erf}^{-1}(y)&space;&=&space;\sum_{n=0}^{N}\frac{C_k}{2k&plus;1}(\frac{\sqrt{\pi}}{2}y)^{2k&plus;1}&space;\\&space;&\text{where}~C_k&space;=&space;\sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m&plus;1)(2m&plus;1)}&space;\end{align*}" title="\begin{align*} {\rm erf}^{-1}(y) &= \sum_{n=0}^{N}\frac{C_k}{2k+1}(\frac{\sqrt{\pi}}{2}y)^{2k+1} \\ &\text{where}~C_k = \sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m+1)(2m+1)} \end{align*}" /></a>
 
+</details>
+
 
 ## gamma function
+
+<details>
 
 |function name|description|
 |:-:|:--|
@@ -106,8 +116,12 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\dpi{120}&space;\begin{align*}&space;\frac{1}{\Gamma(s)}&space;&=&space;se^{\gamma&space;s}\prod_{m=1}^{\infty}(1&plus;\frac{s}{m})e^{-s/m}&space;\\&space;-\log\Gamma(s)&space;&\sim&space;\log&space;s&plus;\gamma&space;s&space;&plus;&space;\sum_{m=1}^{N}\left(\log(1&plus;\frac{s}{m})-\frac{s}{m}\right)&space;\end{align*}" title="\begin{align*} \frac{1}{\Gamma(s)} &= se^{\gamma s}\prod_{m=1}^{\infty}(1+\frac{s}{m})e^{-s/m} \\ -\log\Gamma(s) &\sim \log s+\gamma s + \sum_{m=1}^{N}\left(\log(1+\frac{s}{m})-\frac{s}{m}\right) \end{align*}" /></a>
 
+</details>
+
 
 ## beta function
+
+<details>
 
 |function name|description|
 |:-:|:--|
@@ -127,6 +141,8 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 > regularized incomplete beta function
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=I_x(a,b)&space;=&space;\frac{B(x;a,b)}{B(a,b)}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?I_x(a,b)&space;=&space;\frac{B(x;a,b)}{B(a,b)}" title="I_x(a,b) = \frac{B(x;a,b)}{B(a,b)}" /></a>
+
+</details>
 
 
 ## supplementary functions
