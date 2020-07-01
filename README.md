@@ -176,7 +176,8 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`std(nums, unbiased=true)`|calculate unbiased/biased standard deviation of `nums`|
 |`sem(nums)`|calculate SEM (standard error of mean: s/√n) of `nums`|
 |`skewness(arr, regularize=false)`|calculate skewness of `nums`, use equation √(N-1)/(N-2) * sk instead if `regularize==true`|
-|`welch(arr1, arr2)`|calculate and return array of [Welch's t-value, df] from `arr1` and `arr2`|
+|`welch(mu1,mu2,s1,s2,n1,n2)`|calculate and return the array of [Welch's t-value, df] from mean `mu1` `mu2`, SD `s1` `s2` and sample size `n1` `n2`|
+|`welch_arr(arr1, arr2)`|calculate and return the array of [Welch's t-value, df] from `arr1` and `arr2`|
 
 </details>
 
