@@ -45,6 +45,29 @@ function skewness(arr, regularize=false){
     return sk*Math.sqrt(N-1)/(N-2);
   }
 }
+function cov(arr1, arr2, unbiased=true){
+  if(arr1.length!=arr2.length){
+    return NaN;
+  }else{
+    let mu1 = mean(arr1); let mu2 = mean(arr2);
+    let s = 0;
+    for(var i=0;i<arr1.length;i++){
+      s += (arr1[i]-mu1)*(arr2[i]-mu2);
+    }
+    if(unbiased==true){
+      return s/(arr1.length-1);
+    }else{
+      return s/arr1.length;
+    }
+  }
+}
+function corr(cov12,s1,s2){
+  return cov12/s1/s2;
+}
+function corr_arr(arr1,arr2){
+  return cov(arr1,arr2)/std(arr1)/std(arr2);
+}
+
 function welch(mu1,mu2,s1,s2,n1,n2){
   let v1 = s1**2; let v2 = s2**2;
   let t = (mu1-mu2)/Math.sqrt(v1/n1+v2/n2);

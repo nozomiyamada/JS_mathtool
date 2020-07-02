@@ -176,8 +176,25 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`std(nums, unbiased=true)`|calculate unbiased/biased standard deviation of `nums`|
 |`sem(nums)`|calculate SEM (standard error of mean: s/√n) of `nums`|
 |`skewness(arr, regularize=false)`|calculate skewness of `nums`, use equation √(N-1)/(N-2) * sk instead if `regularize==true`|
+|`cov(arr1, arr2, unbiased=true)`|calculate covariance from from `arr1` and `arr2`|
+|`corr(arr1, arr2)`|calculate Pearson correlation coefficient from from covariance `cov12` and SD `s1` `s2`|
+|`corr_arr(arr1, arr2)`|calculate Pearson correlation coefficient from from `arr1` and `arr2`|
 |`welch(mu1,mu2,s1,s2,n1,n2)`|calculate and return the array of [Welch's t-value, df] from mean `mu1` `mu2`, SD `s1` `s2` and sample size `n1` `n2`|
 |`welch_arr(arr1, arr2)`|calculate and return the array of [Welch's t-value, df] from `arr1` and `arr2`|
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\text{sample&space;mean}~~\overline{x}&space;=&space;\frac{1}{n}\sum_i^{n}(x_i-\overline{x})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{sample&space;mean}~~\overline{x}&space;=&space;\frac{1}{n}\sum_i^{n}(x_i-\overline{x})" title="\text{sample mean}~~\overline{x} = \frac{1}{n}\sum_i^{n}(x_i-\overline{x})" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\text{unbiased&space;variance}~~V&space;=&space;\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})^2" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{unbiased&space;variance}~~V&space;=&space;\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})^2" title="\text{unbiased variance}~~V = \frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})^2" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\text{sample&space;SD}~~s&space;=&space;\sqrt{\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})^2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{sample&space;SD}~~s&space;=&space;\sqrt{\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})^2}" title="\text{sample SD}~~s = \sqrt{\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})^2}" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\text{standard&space;error&space;of&space;mean}~~SE&space;=&space;\frac{s}{\sqrt{n}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{standard&space;error&space;of&space;mean}~~SE&space;=&space;\frac{s}{\sqrt{n}}" title="\text{standard error of mean}~~SE = \frac{s}{\sqrt{n}}" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\text{skewness}~~\tilde{\mu}_3&space;=&space;\frac{1}{n}\sum_i^{n}\left(\frac{x_i-\overline{x}}{s}\right)^3" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{skewness}~~\tilde{\mu}_3&space;=&space;\frac{1}{n}\sum_i^{n}\left(\frac{x_i-\overline{x}}{s}\right)^3" title="\text{skewness}~~\tilde{\mu}_3 = \frac{1}{n}\sum_i^{n}\left(\frac{x_i-\overline{x}}{s}\right)^3" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\text{unbiased&space;covariance}~~Cov&space;=&space;\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})(y_i-\overline{y})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{unbiased&space;covariance}~~Cov&space;=&space;\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})(y_i-\overline{y})" title="\text{unbiased covariance}~~Cov = \frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})(y_i-\overline{y})" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\text{correlation&space;coefficient}~~\rho_{X,Y}&space;=&space;\frac{Cov_{X,Y}}{s_{X}s_{Y}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{correlation&space;coefficient}~~\rho_{X,Y}&space;=&space;\frac{Cov_{X,Y}}{s_{X}s_{Y}}" title="\text{correlation coefficient}~~\rho_{X,Y} = \frac{Cov_{X,Y}}{s_{X}s_{Y}}" /></a>
 
 </details>
 
