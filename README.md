@@ -23,9 +23,9 @@ ___note___: Some codes have no exception handling (e.g. checking integer). You s
 |function name|description|
 |:-:|:--|
 |`gcd2(a,b)`|calculate GCD of two positive integers `a` and `b` by Euclidean Algorithm|
-|`gcd(nums)`|calculate GCD of all integers in array `nums`|
+|`gcd(arr)`|calculate GCD of all integers in array `arr`|
 |`lcm2(a,b)`|calculate LCM of two positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
-|`lcm(nums)`|calculate LCM of all integers in array `nums`|
+|`lcm(arr)`|calculate LCM of all integers in array `arr`|
 
 
 
@@ -170,16 +170,17 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 |function name|description|
 |:-:|:--|
-|`mean(nums)`|calculate mean of `nums`|
-|`median(nums)`|calculate median of `nums`|
-|`variance(nums, unbiased=true)`|calculate unbiased/biased variance of `nums`|
-|`std(nums, unbiased=true)`|calculate unbiased/biased standard deviation of `nums`|
-|`sem(nums)`|calculate SEM (standard error of mean: s/√n) of `nums`|
-|`skewness(arr, regularize=false)`|calculate skewness of `nums`, use equation √(N-1)/(N-2) * sk instead if `regularize==true`|
+|`mean(arr)`|calculate mean of `arr`|
+|`median(arr)`|calculate median of `arr`|
+|`variance(arr, unbiased=true)`|calculate unbiased/biased variance of `arr`|
+|`std(arr, unbiased=true)`|calculate unbiased/biased standard deviation of `arr`|
+|`sem(arr)`|calculate SEM (standard error of mean: s/√n) of `arr`|
+|`skewness(arr, regularize=false)`|calculate skewness of `arr`, use equation √(N-1)/(N-2) * sk instead if `regularize==true`|
 |`cov(arr1, arr2, unbiased=true)`|calculate covariance from from `arr1` and `arr2`|
 |`corr(arr1, arr2)`|calculate Pearson correlation coefficient from from covariance `cov12` and SD `s1` `s2`|
 |`corr_arr(arr1, arr2)`|calculate Pearson correlation coefficient from from `arr1` and `arr2`|
 |`chi2(arr1,arr2)`|calculate χ<sup>2</sup> score from `arr1` and `arr2`|
+|`chi2_independence(arr1,arr2)`|calculate χ<sup>2</sup> score of test for independence from `arr1` and `arr2`|
 |`welch(mu1,mu2,s1,s2,n1,n2)`|calculate and return the array of [Welch's t-value, df] from mean `mu1` `mu2`, SD `s1` `s2` and sample size `n1` `n2`|
 |`welch_arr(arr1, arr2)`|calculate and return the array of [Welch's t-value, df] from `arr1` and `arr2`|
 
@@ -196,6 +197,8 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 <a href="https://www.codecogs.com/eqnedit.php?latex=\text{unbiased&space;covariance}~~Cov&space;=&space;\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})(y_i-\overline{y})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{unbiased&space;covariance}~~Cov&space;=&space;\frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})(y_i-\overline{y})" title="\text{unbiased covariance}~~Cov = \frac{1}{n-1}\sum_i^{n}(x_i-\overline{x})(y_i-\overline{y})" /></a>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\text{correlation&space;coefficient}~~\rho_{X,Y}&space;=&space;\frac{Cov_{X,Y}}{s_{X}s_{Y}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{correlation&space;coefficient}~~\rho_{X,Y}&space;=&space;\frac{Cov_{X,Y}}{s_{X}s_{Y}}" title="\text{correlation coefficient}~~\rho_{X,Y} = \frac{Cov_{X,Y}}{s_{X}s_{Y}}" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\text{chi-squared&space;score}~~\chi^2&space;=&space;\sum_i^{n}\frac{(x_i-y_i)^2}{y_i}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{chi-squared&space;score}~~\chi^2&space;=&space;\sum_i^{n}\frac{(x_i-y_i)^2}{y_i}" title="\text{chi-squared score}~~\chi^2 = \sum_i^{n}\frac{(x_i-y_i)^2}{y_i}" /></a>
 
 </details>
 
