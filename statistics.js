@@ -159,7 +159,17 @@ function p_to_f(p, df1, df2){
  * @return {Number} probability P(X=k)
  */
 function poisson(lambda, k){
-  return (lambda**k) * (Math.exp(-lambda)) / fact(k)
+  if(Number.isInteger(k)){
+    return (lambda**k) * (Math.exp(-lambda)) / fact(k)
+  }else{
+    return (lambda**k) * (Math.exp(-lambda)) / gamma(k+1)
+  }
+}
+function poisson_to_p(lambda, k, split=1e3, n=5){
+  let poi = function(t){
+    return (lambda**t) * (Math.exp(-lambda)) / gamma(t+1)
+  }
+  return 1 - gauss_legendre(0, k, poi, split, n)
 }
 function poisson_cum(lambda, k){
   let sum = 0;
