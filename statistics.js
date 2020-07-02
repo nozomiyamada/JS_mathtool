@@ -67,6 +67,16 @@ function corr(cov12,s1,s2){
 function corr_arr(arr1,arr2){
   return cov(arr1,arr2)/std(arr1)/std(arr2);
 }
+function chi2(arr1,arr2){
+  if(arr1.length!=arr2.length){
+    return NaN;
+  }else{
+    let s = 0;
+    for(var i=0;i<arr1.length;i++){
+      s += (arr1[i]-arr2[i])**2/arr2[i];
+    }
+  return s;
+}
 
 function welch(mu1,mu2,s1,s2,n1,n2){
   let v1 = s1**2; let v2 = s2**2;

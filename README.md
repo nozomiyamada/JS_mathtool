@@ -179,6 +179,7 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`cov(arr1, arr2, unbiased=true)`|calculate covariance from from `arr1` and `arr2`|
 |`corr(arr1, arr2)`|calculate Pearson correlation coefficient from from covariance `cov12` and SD `s1` `s2`|
 |`corr_arr(arr1, arr2)`|calculate Pearson correlation coefficient from from `arr1` and `arr2`|
+|`chi2(arr1,arr2)`|calculate χ<sup>2</sup> score from `arr1` and `arr2`|
 |`welch(mu1,mu2,s1,s2,n1,n2)`|calculate and return the array of [Welch's t-value, df] from mean `mu1` `mu2`, SD `s1` `s2` and sample size `n1` `n2`|
 |`welch_arr(arr1, arr2)`|calculate and return the array of [Welch's t-value, df] from `arr1` and `arr2`|
 
