@@ -1,0 +1,80 @@
+% GL
+\begin{align*} 
+    \int_a^bf(x)dx &= \frac{b-a}{2}\int_{-1}^1f\left(\frac{b-a}{2}t+\frac{a+b}{2}\right)dt\\
+    &\sim \frac{b-a}{2}\sum_{i=1}^{n}\left(\frac{b-a}{2}t_i+\frac{a+b}{2}\right)\\
+    &\text{where $t_i$ is the i-th zero point of Legendre polynomial}
+\end{align*}
+
+% newton method
+\begin{align*} 
+    x_{n+1} = x_n + \frac{y-f(x_n)}{f'(x_n)}
+\end{align*}
+
+% erf
+\begin{align*} 
+    {\rm erf}(z) &= \frac{2}{\sqrt{\pi}}\int_{0}^{z}e^{-t^2}dt \\
+    &= \frac{2}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z}{2n+1}\prod_{k=1}^{n}\frac{-z^2}{k}
+\end{align*}
+
+% ierf function
+\begin{align*} 
+    {\rm erf}^{-1}(y) &= \sum_{n=0}^{N}\frac{C_k}{2k+1}(\frac{\sqrt{\pi}}{2}y)^{2k+1} \\
+    &\text{where}~C_k = \sum_{m=0}^{k-1}\frac{C_mC_{k-1-m}}{(m+1)(2m+1)}
+\end{align*}
+
+% gamma
+\begin{align*} 
+    \frac{1}{\Gamma(s)} &= se^{\gamma s}\prod_{m=1}^{\infty}(1+\frac{s}{m})e^{-s/m} \\
+    -\log\Gamma(s) &\sim \log s+\gamma s + \sum_{m=1}^{N}\left(\log(1+\frac{s}{m})-\frac{s}{m}\right)
+\end{align*}
+
+% beta
+\[ B(a,b) = \int_0^1 t^{a-1}(1-t)^{b-1}dt \]
+\begin{align*}
+    B(x;a,b) = \int_0^x t^{a-1}(1-t)^{b-1}dt
+\end{align*}
+
+\begin{align*}
+    I_x(a,b) = \frac{B(x;a,b)}{B(a,b)} \\
+\end{align*}
+
+
+% z function
+\begin{align*} 
+    p(z \leq x) &= \frac{1}{2} - \frac{1}{\sqrt{2\pi}}\int_{0}^{z}\exp(-x^2/2)dx \\
+    &= \frac{1}{2}-\frac{1}{2}~{\rm erf}(z/\sqrt{2}) \\
+    &= \frac{1}{2}-\frac{1}{\sqrt{\pi}}\sum_{n=0}^{\infty}\frac{z/\sqrt{2}}{2n+1}\prod_{k=1}^{n}\frac{-(z/\sqrt{2})^2}{k}
+\end{align*}
+
+% inverse z function
+\begin{align*} 
+    z(p) = \sqrt{2}~{\rm erf}^{-1}(1-2p)
+\end{align*}
+
+% t-distribution
+\begin{align*} 
+    p(t,df) &= \int_t^{\infty}\frac{\Gamma((df+1)/2)}{\sqrt{df\cdot\pi}~\Gamma(df/2)}\left(1+\frac{s^2}{df}\right)^{-\frac{df+1}{2}}ds\\
+    &= 1-\frac{B(x;df/2,df/2)}{B(df/2,df/2)} \\
+    &\text{where}~x =\frac{t+\sqrt{t^2+df}}{2\sqrt{t^2+df}},~t=\sqrt{\frac{(2x-1)^2df}{4x(1-x)}}
+\end{align*}
+
+% chi2 distribution
+\begin{align*} 
+    p(x,df) &= \int_x^{\infty}\frac{1}{2^{k/2}~\Gamma(k/2)}t^{\frac{k}{2}-1}e^{-\frac{k}{2}}dt\\
+    &= 1-\frac{\gamma(k/2,x/2)}{\Gamma(k/2)}
+\end{align*}
+
+% F-distribution
+\begin{align*} 
+    p(f,df_1,df_2) &= 1-\frac{B(x;df_1/2,df_2/2)}{B(df_1/2,df_2/2)} \\
+    &\text{where}~x =\frac{df_1f}{df_1f+df_2}
+\end{align*}
+
+
+% poisson
+\begin{align*} 
+    Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\
+    Pr(X\geq k) &= \sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!} \\
+    p(X\geq k) &= \int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t+1)}dt
+\end{align*}
+
