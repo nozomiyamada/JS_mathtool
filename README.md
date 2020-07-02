@@ -256,9 +256,9 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 |function name|description|
 |:-:|:--|
-|`poisson(lambda, k)`|calculate Poisson Pr(X=`k`) directly from probability mass function (if `k` in not an integer, use gamma function Γ(k+1) instead of factorial k!)|
-|`poisson_cum(lambda, k)`|calculate cumulative Poisson Pr(X≥`k`)|
-|`poisson_to_p(lambda, k, split=100)`|calculate p(X≥`k`) by assuming the distribution is continuous (it may take a little time to finishing calculate)|
+|`poisson(lambda, k)`|calculate Poisson Pr(`k`) directly from probability mass function (if `k` in not an integer, use gamma function Γ(k+1) instead of factorial k!)|
+|`poisson_cum(lambda, k)`|calculate cumulative Poisson Pr(`k`≤X)|
+|`poisson_to_p(lambda, k, split=100)`|calculate p(`k`≤X) by assuming the distribution is continuous (it may take a little time to finishing calculate)|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\geq&space;k)&space;&=&space;\sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!}&space;\\&space;p(X\geq&space;k)&space;&=&space;\int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t&plus;1)}dt&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\geq&space;k)&space;&=&space;\sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!}&space;\\&space;p(X\geq&space;k)&space;&=&space;\int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t&plus;1)}dt&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\geq k) &= \sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!} \\ p(X\geq k) &= \int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t+1)}dt \end{align*}" /></a>
 
