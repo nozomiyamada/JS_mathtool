@@ -14,11 +14,12 @@ function mean(arr){
 function median(arr){
   if(!Array.isArray(arr)){arr = [arr];}
   let N = arr.length;
-  arr.sort();
+  _arr = arr.slice(); // deep copy
+  _arr.sort((a,b) => a-b);
   if(N%2==0){
-    return (arr[N/2] + arr[N/2-1])/2;
+    return (_arr[N/2] + _arr[N/2-1])/2;
   }else{
-    return arr[(N-1)/2];
+    return _arr[(N-1)/2];
   }
 }
 
@@ -71,13 +72,18 @@ function cov(arr1, arr2, unbiased=true){
     }
   }
 }
-
 function corr(cov12,s1,s2){
   return cov12/s1/s2;
 }
 
 function corr_arr(arr1,arr2){
   return cov(arr1,arr2)/std(arr1)/std(arr2);
+}
+
+function regression(arr1,arr2){
+  let coef = cov(arr1,arr2)/variance(arr1);
+  let intercept = mean(arr2) - coef*mean(arr1);
+  return [intercept, coef];
 }
 
 function chi2(arr1,arr2,yates=false){
