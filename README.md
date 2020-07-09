@@ -185,6 +185,7 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 |`chi2_independence(arr1,arr2)`|calculate χ<sup>2</sup> score of test for independence from `arr1` and `arr2`|
 |`welch(mu1,mu2,s1,s2,n1,n2)`|calculate and return the array of [Welch's t-value, df] from mean `mu1` `mu2`, SD `s1` `s2` and sample size `n1` `n2`|
 |`welch_arr(arr1, arr2)`|calculate and return the array of [Welch's t-value, df] from `arr1` and `arr2`|
+|effect_size(arr1,arr2)|calculate Hedges' g from `arr1` and `arr2`|
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\text{sample&space;mean}~~\overline{x}&space;=&space;\frac{1}{n}\sum_i^{n}(x_i-\overline{x})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{sample&space;mean}~~\overline{x}&space;=&space;\frac{1}{n}\sum_i^{n}(x_i-\overline{x})" title="\text{sample mean}~~\overline{x} = \frac{1}{n}\sum_i^{n}(x_i-\overline{x})" /></a>
 
@@ -201,6 +202,8 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 <a href="https://www.codecogs.com/eqnedit.php?latex=\text{correlation&space;coefficient}~~\rho_{X,Y}&space;=&space;\frac{Cov_{X,Y}}{s_{X}s_{Y}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{correlation&space;coefficient}~~\rho_{X,Y}&space;=&space;\frac{Cov_{X,Y}}{s_{X}s_{Y}}" title="\text{correlation coefficient}~~\rho_{X,Y} = \frac{Cov_{X,Y}}{s_{X}s_{Y}}" /></a>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\text{chi-squared&space;score}~~\chi^2&space;=&space;\sum_i^{n}\frac{(x_i-y_i)^2}{y_i}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\text{chi-squared&space;score}~~\chi^2&space;=&space;\sum_i^{n}\frac{(x_i-y_i)^2}{y_i}" title="\text{chi-squared score}~~\chi^2 = \sum_i^{n}\frac{(x_i-y_i)^2}{y_i}" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;&{\rm&space;Hedges}~g&space;=&space;\frac{\overline{x_2}-\overline{x_1}}{s^*}&space;\\&space;&\text{where}~s^*&space;=&space;\sqrt{\frac{(n_1-1)s_1^2&plus;(n_2-1)s_2^2}{n_1&plus;n_2-2}}&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;&{\rm&space;Hedges}~g&space;=&space;\frac{\overline{x_2}-\overline{x_1}}{s^*}&space;\\&space;&\text{where}~s^*&space;=&space;\sqrt{\frac{(n_1-1)s_1^2&plus;(n_2-1)s_2^2}{n_1&plus;n_2-2}}&space;\end{align*}" title="\begin{align*} &{\rm Hedges}~g = \frac{\overline{x_2}-\overline{x_1}}{s^*} \\ &\text{where}~s^* = \sqrt{\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}} \end{align*}" /></a>
 
 </details>
 
