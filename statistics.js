@@ -119,6 +119,25 @@ function chi2_independence(arr1,arr2){
   }
 }
 
+function adjusted_residual(arr1,arr2){
+  if(arr1.length!=arr2.length){
+    return NaN;
+  }else{
+    let sum1 = sum(arr1); let sum2 = sum(arr2);
+    let sum_all = sum1 + sum2;
+    let res1 = []; let res2 = [];
+    for(var i=0;i<arr1.length;i++){
+      var E1 = (arr1[i]+arr2[i])*sum1/(sum1+sum2);
+      var E2 = (arr1[i]+arr2[i])*sum2/(sum1+sum2);
+      var res_var1 = (1-sum1/sum_all)*(1-(arr1[i]+arr2[i])/sum_all);
+      var res_var2 = (1-sum2/sum_all)*(1-(arr1[i]+arr2[i])/sum_all);
+      res1.push((arr1[i]-E1)/Math.sqrt(E1*res_var1));
+      res2.push((arr2[i]-E2)/Math.sqrt(E2*res_var2));
+    }
+  return [res1,res2];
+  }
+}
+
 function welch(mu1,mu2,s1,s2,n1,n2){
   let v1 = s1**2; let v2 = s2**2;
   let t = (mu1-mu2)/Math.sqrt(v1/n1+v2/n2);
