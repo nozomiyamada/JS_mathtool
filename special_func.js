@@ -85,6 +85,16 @@ function norm(arr){
   return Math.sqrt(sum(arr.map(x => x**2)));
 }
 
+// VECTOR + VECTOR
+function vec_add(arr1, arr2, subtract=false){
+  return (!subtract)? arr1.map((x,i) => x+arr2[i]) : arr1.map((x,i) => x-arr2[i])
+}
+
+// CARTESIAN PRODUCT
+function cartesian(arr1, arr2, func_xy=(x,y)=>x*y){
+  return arr1.map(x => arr2.map(y => func_xy(x,y)));
+}
+
 // SHAPE OF TENSOR
 function shape(tensor){
   let dim_now = tensor;
@@ -197,12 +207,12 @@ function sorted(arr, reverse=false){
 }
 
 // ARGSORT
-function argsort(arr, reverse=false, plusn=0){
+function argsort(arr, reverse=false, plus1=false){
   let original = arr.slice();
   let arr_sort = sorted(arr, reverse);
   for(var i=0; i<arr.length; i++){
     var index = arr_sort.indexOf(original[i]);
-    original[i] = index + plusn;
+    original[i] = index + plus1;
     arr_sort[index] = null; // delete elem in case of duplication
   }
   return original;
@@ -258,7 +268,7 @@ function erf(z,split=1e3,n=5){
 function erfc(z,split=1e3,n=5){
   return 1 - erf(z,split,n);
 }
-function inv_erf(y,iter=30){
+function erf_inv(y,iter=30){
   let f = function(t){return erf(t);}
   let f_prime = function(t){return Math.exp(-1*t*t) * 2 / Math.sqrt(Math.PI);}
   return newton(f,f_prime,y,0.5,iter);
@@ -274,7 +284,7 @@ function erf2(z, N=100){
   }
   return total * 2 / Math.PI**0.5;
 }
-function inv_erf2(y, N=300){
+function erf_inv2(y, N=300){
   let Ck = [1];  // aray of coef Ck
   for(var k=1;k<=N;k++){
     var s=0;
@@ -318,7 +328,7 @@ function gamma(s,split=1e4,n=5){
     return Math.PI/Math.sin(Math.PI*s)/gamma(1-s);
   }
 }
-function inv_gamma(y,iter=30){
+function gamma_inv(y,iter=30){
   let f_prime = function(s){
     let func = function(t){return Math.log(s)*Math.pow(t,s-1)*Math.exp(-t);};
     return gauss_legendre(func,0,s*10);
@@ -352,7 +362,7 @@ function incomplete_gamma(s,x,split=1e3,n=5){
 function regularized_gamma(s,x,split=1e3,n=5){
   return incomplete_gamma(s,x,split,n)/gamma(s);
 }
-function inv_regularized_gamma(s,y,iter=30){ // 0<y<1
+function regularized_gamma_inv(s,y,iter=30){ // 0<y<1
   if(y<=0.1 && s <= 1){
     var x0 = 0.0001;
   }else if(y<=0.1 && s <= 2){
@@ -401,7 +411,7 @@ function incomplete_beta(a,b,x,split=1e3,n=5){
 function regularized_beta(a,b,x,split=1e3,n=5){
   return incomplete_beta(a,b,x,split,n)/beta(a,b,split,n);
 }
-function inv_regularized_beta(a,b,y,iter=30){
+function regularized_beta_inv(a,b,y,iter=30){
   let regularizer = beta(a,b); // denominator
   if(y<0.5){ // find initial x0
     x0_candidate = [0.0001,0.001,0.005,0.01,0.05,0.1,0.3,0.5,0.7,0.9,0.95,0.99,0.995,0.999,0.9995];
