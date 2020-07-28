@@ -1,28 +1,218 @@
-////////// basic functions /////////
+////////////////////  BASIC FUNCTIONS  ////////////////////
 
-// factorial, n must be interger
+// FLATTEN MATRIX INTO 1D ARRAY
+function flatten(mat){
+  if(Array.isArray(mat)){
+    while(mat.map(x => typeof(x)).includes('object')){
+      mat = mat.flat();
+    }
+  }
+  return mat;
+}
+
+function max(mat){
+  mat = flatten(mat);
+  return Math.max.apply(null,mat);
+}
+
+function min(mat){
+  mat = flatten(mat);
+  return Math.min.apply(null,mat);
+}
+
+function sum(mat){
+  if(typeof(mat) === 'number'){
+    return mat;
+  }else if(Array.isArray(mat)){
+    mat = flatten(mat);
+    return mat.reduce((acc, cur) => acc + cur);
+  }
+}
+
+// CHECK DIGITS OF DECIMAL
+function check_decimal(num){
+  let int_decimal = num.toString().split('.');
+  return (int_decimal.length===1)? 0:int_decimal[1].length;
+}
+
+// np.arange(start, end, step) LIKE PYTHON
+function range(start, end, step=1){
+  if(arguments.length===1){
+    [start, end] = [0, arguments[0]];
+  }else if(arguments.length===2){
+    [start, end] = arguments;
+  }
+  let N_elem = Math.floor((end - start)/step);
+  let arr = Array(N_elem).fill(0).map((_, i) => start + (i*step));
+  let decimal_digit = check_decimal(step);
+  return arr.map(x => round(x, decimal_digit)); // round decimal
+}
+
+// FACTORIAL
 function fact(n){
-  if(n==0){
+  if(n===0){
     return 1;
   }else{
     let product = 1;
-    for(i=1;i<=n;i++){product *= i;}
-    return product
+    for(i=1; i<=n; i++){product *= i;}
+    return product;
   }
 }
-// round() like python
+
+// round() LIKE PYTHON
 function round(num, decimal=0){
-  if(typeof(num)=='number'){
-    return Math.round(num * (10**decimal)) / (10**decimal);
-  }else if(typeof(num)=='object'){
-    return num.map(x => Math.round(x * (10**decimal)) / (10**decimal));
+  if(typeof(num) === 'number'){
+    return Math.round(num * (10**decimal))/(10**decimal);
+  }else if(typeof(num) === 'object'){
+    return num.map(x => Math.round(x*(10**decimal))/(10**decimal));
   }
-  
 }
+
+// zip(a,b,c...) LIKE PYTHON
+function zip(...arrs){
+  let max_length = min(arrs.map(arr => arr.length));
+  let zipped = [];
+  for(var i=0; i<max_length; i++){
+    zipped.push(arrs.map(arr => arr[i]));
+  }
+  return zipped;
+}
+
+////////////////////  VECTOR & MATRIX  ////////////////////
+
+// NORM OF VECTOR
+function norm(arr){
+  return Math.sqrt(sum(arr.map(x => x**2)));
+}
+
+// SHAPE OF TENSOR
+function shape(tensor){
+  let dim_now = tensor;
+  let shape_arr = [];
+  while(Array.isArray(dim_now)){
+    shape_arr.push(dim_now.length);
+    dim_now = dim_now[0];
+  }
+  return shape_arr;
+}
+
+// DEEP COPY
+function deepcopy(mat){
+  return JSON.parse(JSON.stringify(mat));
+}
+
+// TRANSPOSE
+function transpose(mat){
+  let new_mat = deepcopy(mat);
+  return new_mat[0].map((_, c) => new_mat.map(r => r[c]));
+}
+
+// np.zeros() LIKE PYTHON
+function zeros(...shape){
+  let max_dim = shape.length;
+  let fill_elem = (elem, length) => new Array(length).fill(elem);
+  let tensor = fill_elem(0, shape[max_dim-1]);
+  for(var dim=max_dim-2; dim>=0; dim--){
+    tensor = fill_elem(tensor, shape[dim]);
+  }
+  return deepcopy(tensor);
+}
+
+// DOT PRODUCT 1D
+function dot1(arr1, arr2){
+  if(arr1.length !== arr2.length){return;}
+  return zip(arr1, arr2).reduce((acc,cur) => acc+cur[0]*cur[1], 0);
+}
+
+// DOT PRODUCT 2D
+function dot2(mat1, mat2){
+  if(mat1[0].length !== mat2.length){return;}
+  let [m, n] = [mat1.length, mat2[0].length];
+  mat2 = transpose(mat2);
+  let new_mat = zeros(m, n);
+  for(var i=0; i<m; i++){
+    for(var j=0; j<n; j++){
+      new_mat[i][j] = dot1(mat1[i], mat2[j]);
+    }
+  }
+  return new_mat;
+}
+
+// DOT PRODUCT INCLUDING 1D*2D
+function dot(tensor1, tensor2){
+  let [s1, s2] = [shape(tensor1), shape(tensor2)]; 
+  if(s1.length>2 || s2.length>2){
+    return;
+  }else if(s1.length===1 && s2.length===1){
+    return dot1(tensor1, tensor2);
+  }else if(s1.length===1 && s1[0]===s2[0]){
+    tensor2 = transpose(tensor2);
+    return tensor2.map(row => dot1(row, tensor1));
+  }else if(s2.length===1 && s1.slice(-1)[0]===s2[0]){
+    return tensor1.map(row => dot1(row, tensor2));
+  }else if(s1.slice(-1)[0]===s2[0]){
+    return dot2(tensor1, tensor2)
+  }
+}
+
+// COFACTOR MATRIX
+function cofactor(mat, row_delete=0, column_delete=0){
+  mat = mat.filter((_, index) => index !== row_delete);
+  return mat.map(row => row.filter((_, index) => index !== column_delete));
+}
+
+// DETERMINANT BY COFACTOR EXPANSION 
+function determinant(mat){
+  if(typeof(mat)==='number'){return mat;}
+  if(mat.length!==mat[0].length){return;}
+  if(mat.length===1){return mat[0];}
+  let det = 0;
+  for(var i=0; i<mat.length; i++){
+    det += (-1)**i * mat[i][0] * determinant(cofactor(mat,i,0));
+  }
+  return det;
+}
+
+// INVERSE MATRIX
+function inv_matrix(mat){
+  let new_mat = deepcopy(mat);
+  let det = determinant(mat);
+  for(var i=0; i<mat.length; i++){
+    for(var j=0; j<mat[0].length; j++){
+      new_mat[i][j] = (-1)**(i+j) * determinant(cofactor(mat,i,j)) / det;
+    }
+  }
+  return transpose(new_mat);
+}
+
+// sorted() LIKE PYTHON
+function sorted(arr, reverse=false){
+  let arr_sort = arr.slice();
+  if(reverse===false){
+    arr_sort.sort((a,b) => a-b);
+  }else{
+    arr_sort.sort((a,b) => b-a);
+  }
+  return arr_sort;
+}
+
+// ARGSORT
+function argsort(arr, reverse=false, plusn=0){
+  let original = arr.slice();
+  let arr_sort = sorted(arr, reverse);
+  for(var i=0; i<arr.length; i++){
+    var index = arr_sort.indexOf(original[i]);
+    original[i] = index + plusn;
+    arr_sort[index] = null; // delete elem in case of duplication
+  }
+  return original;
+}
+
 // sigmoid function
 function sigmoid(x){
-  return 1/(1+Math.exp(-x))
+  return 1/(1+Math.exp(-x));
 }
+
 // combination
 function combination(n,k){
   if(k>n){return 0;}
@@ -52,24 +242,8 @@ function permutator(inputArr, n=0){
   return result;
 }
 
-// argsort
-function argsort(arr, reverse=false, plusn=0){
-  let org = arr.slice();
-  if(reverse==false){
-    arr.sort((a,b) => a-b);
-  }else{
-    arr.sort((a,b) => b-a);
-  }
-  return org.map(x => arr.indexOf(x)+plusn);
-}
 
-// transpose
-function transpose(matrix){
-  return matrix[0].map((_, c) => matrix.map(r => r[c]));
-}
-
-
-////////// special functions //////////
+////////////////////  SPECIAL FUNCTIONS  ////////////////////
 
 /**
  * error function
@@ -230,21 +404,30 @@ function regularized_beta(a,b,x,split=1e3,n=5){
 function inv_regularized_beta(a,b,y,iter=30){
   let regularizer = beta(a,b); // denominator
   if(y<0.5){ // find initial x0
-    var x0 = 0;
-    while(regularized_beta(a,b,x0)<y){x0 += 0.05}
+    x0_candidate = [0.0001,0.001,0.005,0.01,0.05,0.1,0.3,0.5,0.7,0.9,0.95,0.99,0.995,0.999,0.9995];
+    for(cand of x0_candidate){
+      if(incomplete_beta(a,b,cand)/regularizer > y){
+        var x0 = cand;
+        break;
+      }
+    }
   }else{
-    var x0 = 1;
-    while(regularized_beta(a,b,x0)>y){x0 -= 0.05}
+    x0_candidate = [0.9995,0.999,0.995,0.99,0.95,0.9,0.7,0.5,0.3,0.1,0.05,0.01,0.005,0.001,0.0001];
+    for(cand of x0_candidate){
+      if(incomplete_beta(a,b,cand)/regularizer < y){
+        var x0 = cand;
+        break;
+      }
+    }
   }
-  let f = function(t){return regularized_beta(a,b,t);}
+  let f = function(t){return incomplete_beta(a,b,t)/regularizer;}
   let f_prime = function(t){return Math.pow(t,a-1) * Math.pow((1-t),b-1)/regularizer;}
   return newton(f,f_prime,y,x0,iter);
 }
 
 
 
-
-////////// methods for numeric analysis ////////// 
+////////////////////  NUMERIC ANALYSIS  ////////////////////
 
 ///// Gauss-Legendre quadrature /////
 
@@ -317,15 +500,15 @@ const GL_weights = {
  * @param {Int} split the number of intervals, default=1000
  * @param {Number} n order of Legendre polynomial, default=5
  */
-function gauss_legendre(func,a,b,split=1000,n=5){
+function gauss_legendre(func, a, b, split=1e3, n=5){
   let cum_sum = 0; // total area
   let weight = GL_weights[n]; // coef
-  let dx = (b-a)/split; // width of each interval
+  let dx = (b-a) / split; // width of each interval
   for(var i=0;i<split;i++){
     var q = dx/2;
     var r = (2*i+1)*dx/2;
     var total = 0;
-    for(var j=0;j<n;j++){
+    for(var j=0; j<n; j++){
       total += func(q*weight[j][0]+r)*weight[j][1];
     }
     cum_sum += total * q;
@@ -340,16 +523,19 @@ function gauss_legendre(func,a,b,split=1000,n=5){
  * x1 = x0 + (y-f(x0))/f'(x0)
  * @param {Function} func function to be analysed
  * @param {Function} func_prime derivative of the function
- * @param {Number} y value of the function 
+ * @param {Number} y_target value of the function 
  * @param {Number} x0 initial guess for x
  * @param {Int} iter the number of max iteration, default = 30
  */
-function newton(func,func_prime,y_target,x0,iter=30){
+function newton(func, func_prime, y_target, x0, iter=30){
   let x = x0;
-  for(var i=0;i<iter;i++){
+  for(var i=0; i<iter; i++){
     y = func(x);
-    x += (y_target-y)/func_prime(x)
-    if(Math.abs(y_target-y)<1e-12){console.log(`iteration: ${i}/${iter}`);break;}
+    x += (y_target-y) / func_prime(x)
+    if(Math.abs(y_target-y)<1e-12){
+      console.log(`iteration: ${i}/${iter}`);
+      break;
+    }
   }
   return x;
 }
