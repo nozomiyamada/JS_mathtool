@@ -100,18 +100,24 @@ function regression(arr1,arr2){
   return [intercept, coef];
 }
 
+function order_statistic(n){
+  let arr = [];
+  for(let k=1; k<=n; k++){
+    let fx = x => x*normal_pdf(x)*(normal_cdf(x)**(k-1))*((1-normal_cdf(x))**(n-k));
+    let X = k*combination(n,k)*gauss_legendre(fx,-10,10,2e2);
+    arr.push(X);
+  }
+  let norm_arr = norm(arr);
+  return round(arr.map(x => x/norm_arr), 10);
+}
 
 function shapiro(arr){
   arr = sorted(arr);
   let mu = mean(arr);
   let sd = std(arr);
   let cum_prob = arr.map((_,i) => (i+1)/(arr.length+1));
-  let normal_score = cum_prob.map(p => normal_inv(p, mu, sd));
-  let dev_vec = vec_add(cum_prob, normal_score, subtract=true);
-  let V = cartesian(dev_vec,dev_vec);
-  V = inv_matrix(V);
-  console.log(V, normal_score);
-  return dot(normal_score,V)/dot(normal_score, dot(V, dot(V, normal_score)))**0.5;
+  let normal_score = cum_prob.map(p => normal_inv(p));
+  console.log(normal_score);
 }
 
 function chi2_fit(arr1,arr2,yates=false){
