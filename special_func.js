@@ -223,12 +223,12 @@ function sigmoid(x){
   return 1/(1+Math.exp(-x));
 }
 
-// combination
+// COMBINATION
 function combination(n,k){
   if(k>n){return 0;}
   return Math.round(fact(n)/fact(k)/fact(n-k));
 }
-// permutation
+// PERMUTATION
 function permutation(n,k){
   if(k>n){return 0;}
   return Math.round(fact(n)/fact(n-k));
