@@ -102,13 +102,20 @@ function regression(arr1,arr2){
 
 function order_statistic(n){
   let arr = [];
+  let cov_mat = zeros(n,n);
   for(let k=1; k<=n; k++){
     let fx = x => x*normal_pdf(x)*(normal_cdf(x)**(k-1))*((1-normal_cdf(x))**(n-k));
     let X = k*combination(n,k)*gauss_legendre(fx,-10,10,2e2);
     arr.push(X);
+    for(let l=k; l<=n; l++){
+      let fxy = (x,y) => fact(n)/fact(k-1)/fact(l-1-k)/fact(n-l)*normal_cdf(x)**(k-1)*(normal_cdf(y)-normal_cdf(x))**(l-1-k)*(1-normal_cdf(y))**(n-l)*normal_pdf(x)*normal_pdf(y)*x*y;
+      let XY = gauss_legendre2D(fxy,-5,5.1e2);
+      cov_mat[k-1][l-1] = XY;
+      cov_mat[l-1][k-1] = XY;
+    }
   }
   let norm_arr = norm(arr);
-  return round(arr.map(x => x/norm_arr), 10);
+  return [round(arr.map(x => x/norm_arr), 10), cov_mat];
 }
 
 function shapiro(arr){

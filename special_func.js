@@ -91,7 +91,7 @@ function vec_add(arr1, arr2, subtract=false){
 }
 
 // CARTESIAN PRODUCT
-function cartesian(arr1, arr2, func_xy=(x,y)=>x*y){
+function cartesian(arr1, arr2, func_xy=(x,y)=>[x,y]){
   return arr1.map(x => arr2.map(y => func_xy(x,y)));
 }
 
@@ -514,13 +514,34 @@ function gauss_legendre(func, a, b, split=1e3, n=5){
   let cum_sum = 0; // total area
   let weight = GL_weights[n]; // coef
   let dx = (b-a) / split; // width of each interval
+  let q = dx/2;
   for(let i=0; i<split; i++){
-    var q = dx/2;
     var r = a+((2*i+1)*dx)/2;
     var total = sum(weight.map(x => func(q*x[0] + r)*x[1])) * q; 
     cum_sum += total;
   }
   return cum_sum;
+}
+
+function gauss_legendre2D(func, ax, bx, ay, by, split=5e2, n=5){
+  let total = 0; // total area
+  let weight = GL_weights[n]; // coef
+  var weight_mat = cartesian(weight.map(w => w[1]), weight.map(w => w[1]), (x,y)=>x*y).flat();
+  let dx = (bx-ax) / split; // width of each interval
+  let dy = (by-ay) / split; // width of each interval
+  for(let i=0; i<split; i++){
+    var qx = dx/2;
+    var rx = ax+((2*i+1)*dx)/2;
+    var x_points = weight.map(w => qx*w[0] + rx); 
+    for(let j=0; j<split; j++){
+      var qy = dy/2;
+      var ry = ay+((2*j+1)*dy)/2;
+      var y_points = weight.map(w => qy*w[0] + ry);
+      var xy_point = cartesian(x_points, y_points).flat();
+      total += sum(xy_point.map((xy, ind) => func(xy[0], xy[1]) * weight_mat[ind])) ; 
+    }
+  }
+  return total * qx * qy;
 }
 
 ///// Newton's Method /////
