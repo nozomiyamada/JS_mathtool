@@ -443,7 +443,7 @@ function regularized_beta_inv(a,b,y,iter=30){
 
 // weights[n] = [[zero point x_i, weight w_i],..]
 const GL_weights = {
-  2:[[0.57735026918962576451,1.0],
+  2:[[-0.57735026918962576451,1.0],
     [0.57735026918962576451,1.0]],
   3:[[-0.77459666924148337704,0.55555555555555555552],
     [0,0.88888888888888888889],
@@ -514,16 +514,13 @@ function gauss_legendre(func, a, b, split=1e3, n=5){
   let cum_sum = 0; // total area
   let weight = GL_weights[n]; // coef
   let dx = (b-a) / split; // width of each interval
-  for(var i=0;i<split;i++){
+  for(let i=0; i<split; i++){
     var q = dx/2;
-    var r = (2*i+1)*dx/2;
-    var total = 0;
-    for(var j=0; j<n; j++){
-      total += func(q*weight[j][0]+r)*weight[j][1];
-    }
-    cum_sum += total * q;
+    var r = a+((2*i+1)*dx)/2;
+    var total = sum(weight.map(x => func(q*x[0] + r)*x[1])) * q; 
+    cum_sum += total;
   }
-  return cum_sum
+  return cum_sum;
 }
 
 ///// Newton's Method /////
