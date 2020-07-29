@@ -35,6 +35,10 @@ function variance(mat, unbiased=true){
   return arr.reduce((acc, cur) => acc+(cur-mu)**2, 0)/N;
 }
 
+function pooled_variance(arr1,arr2){
+  return (variance(arr1,false)*arr1.length + variance(arr2,false)*arr2.length)/(arr1.length+arr2.length-2);
+}
+
 function std(mat, unbiased=true){
   if(!Array.isArray(mat)){mat = [mat];}
   let arr = flatten(mat);
@@ -120,6 +124,8 @@ function shapiro(arr){
   console.log(normal_score);
 }
 
+////////////////////  HYPOTHESIS TESTING  ////////////////////
+
 function chi2_fit(arr1,arr2,yates=false){
   let chi2_value = 0;
   if(arr1.length!==arr2.length){
@@ -177,6 +183,7 @@ function welch(mu1,mu2,s1,s2,n1,n2){
   let df = (v1/n1+v2/n2)**2 / ((v1/n1)**2/(n1-1)+(v2/n2)**2/(n2-1));
   return [t,df,t_to_p(Math.abs(t),df)];
 }
+
 function welch_arr(arr1,arr2){
   let mu1 = mean(arr1); let mu2 = mean(arr2);
   let v1 = variance(arr1); let v2 = variance(arr2);
@@ -186,8 +193,19 @@ function welch_arr(arr1,arr2){
   return [t,df,t_to_p(Math.abs(t),df)];
 }
 
-function pooled_variance(arr1,arr2){
-  return (variance(arr1,false)*arr1.length + variance(arr2,false)*arr2.length)/(arr1.length+arr2.length-2);
+function mann_whitney(arr1, arr2){
+  if(arr1.length > arr2.length){
+    [arr1, arr2] = [arr2, arr1];
+  }
+  arr1 = sorted(arr1);
+  arr2 = sorted(arr2);
+  let [n1, n2] = [arr1.length, arr2.length]
+  let U = sum(arr1.map(x => arr2.filter(y => y < x).length));
+  let mu = n1*n2 / 2;
+  let sd = Math.sqrt(n1*n2*(n1+n2+1)/12);
+  let z = (U-mu)/sd;
+  let p = z_to_p(Math.abs(z));
+  return [z, p];
 }
 
 function effect_size(mu1,mu2,s1,s2,n1,n2){
