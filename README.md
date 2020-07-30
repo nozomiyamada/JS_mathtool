@@ -70,6 +70,8 @@ ___note___: Some codes have no exception handling (e.g. checking integer). You s
 [1, 3, 2]
 ~~~
 
+</details>
+
 ## tensor operations
 
 <details>
@@ -117,6 +119,7 @@ ___note___: Some codes have no exception handling (e.g. checking integer). You s
 [[3, 3], [3, 3]]
 ~~~
 
+</details>
 
 ## numeric analysis
 
