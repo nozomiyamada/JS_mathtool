@@ -11,25 +11,112 @@ ___note___: Some codes have no exception handling (e.g. checking integer). You s
 
 ### .js files
 
-- `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
-- `special_func.js` numeric analysis methods and special functions e.g. gamma, beta, erf
+- `math_func.js` numeric analysis methods and math functions e.g. sum, fact, gamma, beta, erf
 - `statistics.js` functions for statistics (most of the functions depend `special_func.js`)
+- `constants.js` constants used in `statistics.js`
+- `gcd_lcm.js` functions for calculating GCD(ห.ร.ม) and LCM(ค.ร.น)
 - `misc.js` other various functions
 
 
 
-# `gcd_lcm.js`
+# `math_func.js`
+
+## basic functions
+
+<details>
 
 |function name|description|
 |:-:|:--|
-|`gcd2(a,b)`|calculate GCD of two positive integers `a` and `b` by Euclidean Algorithm|
-|`gcd(arr)`|calculate GCD of all integers in array `arr`|
-|`lcm2(a,b)`|calculate LCM of two positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
-|`lcm(arr)`|calculate LCM of all integers in array `arr`|
+|`max(matrix)`|find the maximum value in a given array/matrix|
+|`min(matrix)`|find the minimum value in a given array/matrix|
+|`sum(matrix)`|culculate the summation of a given array/matrix|
+|`fact(n)`|calculate factorial n! , `n` must be an integer|
+|`check_decimal(num)`|check how many digits a given number has|
+|`range(start, end, step=1)`|just like `range(start, end, step)` in Python. `step` must not be an integer|
+|`round(arr, decimal=0)`|just like `round(num, d)` in Python. If an array is given, it rounds all numbers in the array.|
+|`zip(...arr)`|just like `zip(*arr)` in Python. The length of return array is the minimum length of the given arrays.|
+|`sorted(arr, reverse=false)`|just like `sorted()` in Python. It returns a deep copy of the original array|
+|`argsort(arr, reverse=false, plus1=false)`|return array of indices after sorting by ascending order. If `plus1=true`, index starts from one|
 
+~~~javascript
+>>> check_decimal(3.66)
+2
 
+>>> range(3)
+[0, 1, 2]
 
-# `special_func.js`
+>>> range(3, 8)
+[3, 4, 5, 6, 7]
+
+>>> range(1, 2, 0.1)
+[1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9]
+
+>>> round(3.5)
+3
+
+>>> round(4.666, 2)
+4.67
+
+>>> round([1.32, 2.37], 1)
+[1.3, 2.4]
+
+>>> zip([1,2,3], [10,20,30,40])
+[[1, 10], [2, 20], [3, 30]]
+
+>>> argsort([10,1,5,0])
+[3, 1, 2, 0]
+
+>>> argsort([3,1,2], reverse=true, plus1=true)
+[1, 3, 2]
+~~~
+
+## tensor operations
+
+<details>
+
+|function name|description|
+|:-:|:--|
+|`norm(arr)`|calculate norm of a given vector|
+|`vec_add(arr1, arr2, subtract=false)`|calculate addition of given two vector. If `subtract=true`, calculate subtraction instead|
+|`flatten(tensor)`|flatten a given tensor into 1D array|
+|`shape(tensor)`|return the shape of a given tensor, just like `.shape` of numpy|
+|`cartesian(arr1, arr2, func_xy=(x,y)=>[x,y])`|create the cartesian product of two given arrays. It returns pairs of elements by default, but you can specify operation by `func_xy`|
+|`deepcopy(tensor)`|make an deep copy of given tensor. If `tensor` is 1D array (vector) or 2D array (matrix), you can use built-in method `.slice()` instead|
+|`transpose(matrix)`|transpose a given matrix|
+|`zeros(shape, value=0)`|create a zero matrix with `shape` = [l,m,n...], just like `numpy.zeros(shape)`. If `value` is specified, the matrix is filled with the value. |
+|`dot1(arr1, arr2)`|calculate dot product of given two vectors|
+|`dot2(mat1, mat2)`|calculate dot product of given two matrices|
+|`dot(tensor1, tensor2)`|calculate dot product of given two vector/matrix|
+|`cofactor(mat, row_delete=0, column_delete=0)`|return cofactor matrix of a given matrix by deleting `row_delete` and `columns_delete`|
+|`determinant(mat)`|calculate determinant of a given matrix. It may take a long time for large matrix because the algorithm uses cofactor expansion instead of LU decomposition|
+|`inv_matrix(mat)`|calculate inverse matrix of a given matrix|
+
+~~~javascript
+>>> norm([3,4])
+5
+
+>>> vec_add([1,2], [3,4])
+[4, 6]
+
+>>> flatten([[[1,2],[3,4]],[[5,6],[7,8]]])
+[1, 2, 3, 4, 5, 6, 7, 8]
+
+>>> shape([[[1,1,1],[2,2,2]],[[3,3,3],[4,4,4]]])
+[2, 2, 3]
+
+>>> cartesian([1,2], [3,4])
+[[[1,3], [1,4]], [[2,3], [2,4]]]
+
+>>> cartesian(['A','B'], ['a','b'], (x,y) => x+y)
+[['Aa', 'Ab'], ['Ba', 'Bb']]
+
+>>> zeros([2,3])
+[[0, 0, 0], [0, 0, 0]]
+
+>>> zeros([2,2], 3)
+[[3, 3], [3, 3]]
+~~~
+
 
 ## numeric analysis
 
@@ -42,16 +129,16 @@ ___note___: Some codes have no exception handling (e.g. checking integer). You s
 |`brent(func,y,a0,b0,iter=100,epsiron=1e-15)`|solve the equation y = f(x) by using [Brent's method](https://en.wikipedia.org/wiki/Brent%27s_method). `func` must be an explicit function that takes only one argument like f(x). `a0` and `b0` are initial guess for x. These two numbers must have opposite sign, otherwise the function will return `NaN`. You can set maximum iteration times `iter` and minimum width of step `epsiron` in each iteration.|
 
 ~~~javascript
->>> fx = function(x){return x**2};
+>>> fx = x => x**2;
 >>> gauss_legendre(fx, a=0, b=3);
 3
 
->>> f = function(x){return x**2+1};
->>> fprime = function(x){return 2*x};
+>>> f = x => x**2+1;
+>>> fprime = x => 2*x;
 >>> newton(f, fprime, y=10, x0=1);
 3
 
->>> f = function(x){return x**3};
+>>> f = x => x**3;
 >>> brent(f, y=8, a0=-1, b0=6);
 2
 ~~~
@@ -98,7 +185,6 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 |function name|description|
 |:-:|:--|
-|`fact(n)`|calculate factorial n! , `n` must be an integer|
 |`Euler_const`|Euler's constant γ = 0.5772156649015328606|
 |`gamma(s,split=1e3,n=5)`|calculate Γ(s) = (s-1)! by Gauss-Legendre quadrature of n-th Legendre polynomial|
 |`incomplete_gamma(s,x,split=1e3,n=5)`|calculate lower incomplete gamma function γ(s,x) by Gauss-Legendre quadrature of n-th Legendre polynomial|
@@ -151,7 +237,6 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 |function name|description|
 |:-:|:--|
-|`round(num,decimal=0)`|same as the Python function `round()`|
 |`sigmoid(x)`|calculate sigmoid function|
 |`combination(n,k)`|calculate combinations C(n,k)|
 |`permutation(n,k)`|calculate permutations P(n,k)|
@@ -289,6 +374,15 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 <a href="https://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\geq&space;k)&space;&=&space;\sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!}&space;\\&space;p(X\geq&space;k)&space;&=&space;\int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t&plus;1)}dt&space;\end{align*}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\begin{align*}&space;Pr(X=k)&space;&=&space;\frac{\lambda^ke^{-\lambda}}{k!}&space;\\&space;Pr(X\geq&space;k)&space;&=&space;\sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!}&space;\\&space;p(X\geq&space;k)&space;&=&space;\int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t&plus;1)}dt&space;\end{align*}" title="\begin{align*} Pr(X=k) &= \frac{\lambda^ke^{-\lambda}}{k!} \\ Pr(X\geq k) &= \sum_{n=k}^{\infty}\frac{\lambda^ne^{-\lambda}}{n!} \\ p(X\geq k) &= \int_{k}^{\infty}\frac{\lambda^te^{-\lambda}}{\Gamma(t+1)}dt \end{align*}" /></a>
 
 </details>
+
+# `gcd_lcm.js`
+
+|function name|description|
+|:-:|:--|
+|`gcd2(a,b)`|calculate GCD of two positive integers `a` and `b` by Euclidean Algorithm|
+|`gcd(arr)`|calculate GCD of all integers in array `arr`|
+|`lcm2(a,b)`|calculate LCM of two positive integers `a` and `b` by using equation `a*b=GCD*LCM`|
+|`lcm(arr)`|calculate LCM of all integers in array `arr`|
 
 
 ## `misc.js`

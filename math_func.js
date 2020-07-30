@@ -1,31 +1,32 @@
 ////////////////////  BASIC FUNCTIONS  ////////////////////
 
-// FLATTEN MATRIX INTO 1D ARRAY
-function flatten(mat){
-  if(Array.isArray(mat)){
-    while(mat.map(x => typeof(x)).includes('object')){
-      mat = mat.flat();
-    }
+function max(matrix){
+  matrix = flatten(matrix);
+  return Math.max.apply(null,matrix);
+}
+
+function min(matrix){
+  matrix = flatten(matrix);
+  return Math.min.apply(null,matrix);
+}
+
+function sum(matrix){
+  if(typeof(matrix) === 'number'){
+    return matrix;
+  }else if(Array.isArray(matrix)){
+    matrix = flatten(matrix);
+    return matrix.reduce((acc, cur) => acc + cur);
   }
-  return mat;
 }
 
-function max(mat){
-  mat = flatten(mat);
-  return Math.max.apply(null,mat);
-}
-
-function min(mat){
-  mat = flatten(mat);
-  return Math.min.apply(null,mat);
-}
-
-function sum(mat){
-  if(typeof(mat) === 'number'){
-    return mat;
-  }else if(Array.isArray(mat)){
-    mat = flatten(mat);
-    return mat.reduce((acc, cur) => acc + cur);
+// FACTORIAL
+function fact(n){
+  if(n===0){
+    return 1;
+  }else{
+    let product = 1;
+    for(let i=1; i<=n; i++){product *= i;}
+    return product;
   }
 }
 
@@ -48,34 +49,46 @@ function range(start, end, step=1){
   return arr.map(x => round(x, decimal_digit)); // round decimal
 }
 
-// FACTORIAL
-function fact(n){
-  if(n===0){
-    return 1;
-  }else{
-    let product = 1;
-    for(i=1; i<=n; i++){product *= i;}
-    return product;
-  }
-}
-
 // round() LIKE PYTHON
-function round(num, decimal=0){
-  if(typeof(num) === 'number'){
-    return Math.round(num * (10**decimal))/(10**decimal);
-  }else if(typeof(num) === 'object'){
-    return num.map(x => Math.round(x*(10**decimal))/(10**decimal));
+function round(arr, decimal=0){
+  if(typeof(arr) === 'number'){
+    return Math.round(arr * (10**decimal))/(10**decimal);
+  }else if(typeof(arr) === 'object'){
+    return arr.map(x => Math.round(x*(10**decimal))/(10**decimal));
   }
 }
 
 // zip(a,b,c...) LIKE PYTHON
 function zip(...arrs){
-  let max_length = min(arrs.map(arr => arr.length));
+  let min_length = min(arrs.map(arr => arr.length));
   let zipped = [];
-  for(var i=0; i<max_length; i++){
+  for(var i=0; i<min_length; i++){
     zipped.push(arrs.map(arr => arr[i]));
   }
   return zipped;
+}
+
+// sorted() LIKE PYTHON
+function sorted(arr, reverse=false){
+  let arr_sort = arr.slice();
+  if(reverse===false){
+    arr_sort.sort((a,b) => a-b);
+  }else{
+    arr_sort.sort((a,b) => b-a);
+  }
+  return arr_sort;
+}
+
+// ARGSORT
+function argsort(arr, reverse=false, plus1=false){
+  let original = arr.slice();
+  let arr_sort = sorted(arr, reverse);
+  for(var i=0; i<arr.length; i++){
+    var index = arr_sort.indexOf(original[i]);
+    original[i] = index + plus1;
+    arr_sort[index] = null; // delete elem in case of duplication
+  }
+  return original;
 }
 
 ////////////////////  VECTOR & MATRIX  ////////////////////
@@ -90,9 +103,14 @@ function vec_add(arr1, arr2, subtract=false){
   return (!subtract)? arr1.map((x,i) => x+arr2[i]) : arr1.map((x,i) => x-arr2[i])
 }
 
-// CARTESIAN PRODUCT
-function cartesian(arr1, arr2, func_xy=(x,y)=>[x,y]){
-  return arr1.map(x => arr2.map(y => func_xy(x,y)));
+// FLATTEN MATRIX INTO 1D ARRAY
+function flatten(tensor){
+  if(Array.isArray(tensor)){
+    while(tensor.map(x => typeof(x)).includes('object')){
+      tensor = tensor.flat();
+    }
+  }
+  return matrix;
 }
 
 // SHAPE OF TENSOR
@@ -106,22 +124,27 @@ function shape(tensor){
   return shape_arr;
 }
 
+// CARTESIAN PRODUCT
+function cartesian(arr1, arr2, func_xy=(x,y)=>[x,y]){
+  return arr1.map(x => arr2.map(y => func_xy(x,y)));
+}
+
 // DEEP COPY
-function deepcopy(mat){
-  return JSON.parse(JSON.stringify(mat));
+function deepcopy(tensor){
+  return JSON.parse(JSON.stringify(tensor));
 }
 
 // TRANSPOSE
-function transpose(mat){
-  let new_mat = deepcopy(mat);
-  return new_mat[0].map((_, c) => new_mat.map(r => r[c]));
+function transpose(matrix){
+  let new_matrix = deepcopy(matrix);
+  return new_matrix[0].map((_, c) => new_matrix.map(r => r[c]));
 }
 
 // np.zeros() LIKE PYTHON
-function zeros(...shape){
+function zeros(shape, value=0){
   let max_dim = shape.length;
   let fill_elem = (elem, length) => new Array(length).fill(elem);
-  let tensor = fill_elem(0, shape[max_dim-1]);
+  let tensor = fill_elem(value, shape[max_dim-1]);
   for(var dim=max_dim-2; dim>=0; dim--){
     tensor = fill_elem(tensor, shape[dim]);
   }
@@ -195,28 +218,6 @@ function inv_matrix(mat){
   return transpose(new_mat);
 }
 
-// sorted() LIKE PYTHON
-function sorted(arr, reverse=false){
-  let arr_sort = arr.slice();
-  if(reverse===false){
-    arr_sort.sort((a,b) => a-b);
-  }else{
-    arr_sort.sort((a,b) => b-a);
-  }
-  return arr_sort;
-}
-
-// ARGSORT
-function argsort(arr, reverse=false, plus1=false){
-  let original = arr.slice();
-  let arr_sort = sorted(arr, reverse);
-  for(var i=0; i<arr.length; i++){
-    var index = arr_sort.indexOf(original[i]);
-    original[i] = index + plus1;
-    arr_sort[index] = null; // delete elem in case of duplication
-  }
-  return original;
-}
 
 // sigmoid function
 function sigmoid(x){
@@ -526,7 +527,7 @@ function gauss_legendre(func, a, b, split=1e3, n=5){
 function gauss_legendre2D(func, ax, bx, ay, by, split=5e2, n=5){
   let total = 0; // total area
   let weight = GL_weights[n]; // coef
-  var weight_mat = cartesian(weight.map(w => w[1]), weight.map(w => w[1]), (x,y)=>x*y).flat();
+  var weight_matrix = cartesian(weight.map(w => w[1]), weight.map(w => w[1]), (x,y)=>x*y).flat();
   let dx = (bx-ax) / split; // width of each interval for x
   let dy = (by-ay) / split; // width of each interval for y
   for(let i=0; i<split; i++){
