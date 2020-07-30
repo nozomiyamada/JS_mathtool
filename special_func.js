@@ -527,8 +527,8 @@ function gauss_legendre2D(func, ax, bx, ay, by, split=5e2, n=5){
   let total = 0; // total area
   let weight = GL_weights[n]; // coef
   var weight_mat = cartesian(weight.map(w => w[1]), weight.map(w => w[1]), (x,y)=>x*y).flat();
-  let dx = (bx-ax) / split; // width of each interval
-  let dy = (by-ay) / split; // width of each interval
+  let dx = (bx-ax) / split; // width of each interval for x
+  let dy = (by-ay) / split; // width of each interval for y
   for(let i=0; i<split; i++){
     var qx = dx/2;
     var rx = ax+((2*i+1)*dx)/2;

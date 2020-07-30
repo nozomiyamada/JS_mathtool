@@ -113,7 +113,7 @@ function order_statistic(n){
     arr.push(X);
     for(let l=k; l<=n; l++){
       let fxy = (x,y) => fact(n)/fact(k-1)/fact(l-1-k)/fact(n-l)*normal_cdf(x)**(k-1)*(normal_cdf(y)-normal_cdf(x))**(l-1-k)*(1-normal_cdf(y))**(n-l)*normal_pdf(x)*normal_pdf(y)*x*y;
-      let XY = gauss_legendre2D(fxy,-5,5.1e2);
+      let XY = gauss_legendre2D(fxy,-5,5,1e2);
       cov_mat[k-1][l-1] = XY;
       cov_mat[l-1][k-1] = XY;
     }
@@ -231,8 +231,8 @@ function effect_size_arr(arr1,arr2){
 function normal_pdf(x, mu=0, sd=1){
   return Math.exp(-1*(x-mu)**2/(2*sd**2))/Math.sqrt(2*Math.PI)/sd;
 }
-function normal_cdf(x, mu=0, sd=1){
-  return (1 + erf((x-mu)/Math.sqrt(2)/sd)) * 0.5;
+function normal_cdf(x, mu=0, sd=1, split=1e3){
+  return (1 + erf((x-mu)/Math.sqrt(2)/sd, split)) * 0.5;
 }
 function normal_inv(p, mu=0, sd=1){
   if(p<0 || p>1){return NaN;}
