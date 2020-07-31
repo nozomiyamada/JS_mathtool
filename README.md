@@ -304,6 +304,8 @@ Both `newton` and `brent` will abort the process when error is below **1e-12** a
 
 |function name|description|
 |:-:|:--|
+|`normal_pdf(x, mu=0, sd=1)`|population density function of normal distribution φ(x)|
+|`normal_cdf(x, mu=0, sd=1)`|cumulative distribution function of normal distribution Φ(x)|
 |`z_to_p(z, taylor=false)`|calculate one-tailed p(z≤x) from `z` score by `erf(z)` (when `taylor==false`) or `erf2(z)` (when `taylor==true`), where z must be in the range [0,∞)|
 |`p_to_z(p, taylor=false)`|calculate z-score from one-tailed `p`(z≤x) by `inv_erf(z)` (when `taylor==false`) or `inv_erf2(z)` (when `taylor==true`), where p must be in the range [0,0.5]|
 

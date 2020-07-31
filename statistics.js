@@ -271,8 +271,6 @@ function p_to_z(p, taylor=false, N=300){
   }
 }
 
-
-
 /**
  * t-distribution
  * @param {Number} t t-score 

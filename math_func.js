@@ -218,7 +218,6 @@ function inv_matrix(mat){
   return transpose(new_mat);
 }
 
-
 // sigmoid function
 function sigmoid(x){
   return 1/(1+Math.exp(-x));
@@ -263,16 +262,15 @@ function permutator(inputArr, n=0){
  * @param {Int} n order of Legendre polynomial
  */
 function erf(z,split=1e3,n=5){
-  let func = function(t){return Math.exp(-1*t*t);}
+  let func = t => Math.exp(-1*t*t);
   return gauss_legendre(func,0,z,split,n) * 2 / Math.sqrt(Math.PI);
 }
 function erfc(z,split=1e3,n=5){
   return 1 - erf(z,split,n);
 }
 function erf_inv(y,iter=30){
-  let f = function(t){return erf(t);}
-  let f_prime = function(t){return Math.exp(-1*t*t) * 2 / Math.sqrt(Math.PI);}
-  return newton(f,f_prime,y,0.5,iter);
+  let f_prime = t => Math.exp(-1*t*t) * 2 / Math.sqrt(Math.PI);
+  return newton(erf, f_prime, y, x0=0.5, iter);
 }
 function erf2(z, N=100){
   let total = 0;
@@ -306,8 +304,9 @@ function erf_inv2(y, N=300){
  * gamma function & lower incomplete gamma by Gauss-Legendre
  * @param {Number} s independent variable
  * @param {Number} x upper limit of integral
- * @param {Int} split the number of intervals
- * @param {Int} n order of Legendre polynomial
+ * @param {Number} split the number of intervals
+ * @param {Number} n order of Legendre polynomial
+ * @returns {number} value of Γ(s)
  */
 function gamma(s,split=1e4,n=5){
   if(s>1 && s%1==0){
@@ -320,7 +319,7 @@ function gamma(s,split=1e4,n=5){
       return (s-1)*gamma(s-1);
     }
   }
-  let func = function(t){return Math.pow(t,s-1)*Math.exp(-t);};
+  let func = t => Math.pow(t,s-1)*Math.exp(-t);
   if(s>=2){
     return gauss_legendre(func,0,s*10,split,n); // must not integrate up to infinity
   }else if(0.5<s && s<2){
@@ -353,7 +352,7 @@ function incomplete_gamma(s,x,split=1e3,n=5){
       return (s-1)*incomplete_gamma(s-1,x)-x**(s-1)*Math.exp(-x);
     }
   }
-  let func = function(t){return Math.pow(t,s-1)*Math.exp(-t);};
+  let func = t => Math.pow(t,s-1)*Math.exp(-t);
   if(s>2){
     return gauss_legendre(func,0,x,split,n);
   }else{
@@ -372,8 +371,8 @@ function regularized_gamma_inv(s,y,iter=30){ // 0<y<1
     var x0 = s;
   }
   y *= gamma(s);
-  let f = function(t){return incomplete_gamma(s,t);}
-  let f_prime = function(t){return Math.pow(t,s-1)*Math.exp(-t);}
+  let f = t => incomplete_gamma(s,t);
+  let f_prime = t => Math.pow(t,s-1)*Math.exp(-t);
   return newton(f,f_prime,y,x0,iter);
 }
 
@@ -431,8 +430,8 @@ function regularized_beta_inv(a,b,y,iter=30){
       }
     }
   }
-  let f = function(t){return incomplete_beta(a,b,t)/regularizer;}
-  let f_prime = function(t){return Math.pow(t,a-1) * Math.pow((1-t),b-1)/regularizer;}
+  let f = t => incomplete_beta(a,b,t)/regularizer;
+  let f_prime = t => Math.pow(t,a-1) * Math.pow((1-t),b-1)/regularizer;
   return newton(f,f_prime,y,x0,iter);
 }
 
