@@ -110,7 +110,7 @@ function flatten(tensor){
       tensor = tensor.flat();
     }
   }
-  return matrix;
+  return tensor;
 }
 
 // SHAPE OF TENSOR

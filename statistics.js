@@ -228,6 +228,8 @@ function effect_size_arr(arr1,arr2){
 
 ////////////////////  DISTRIBUTIONS  ////////////////////
 
+//////////  NORMAL DISTRIBUTION  //////////
+
 function normal_pdf(x, mu=0, sd=1){
   return Math.exp(-1*(x-mu)**2/(2*sd**2))/Math.sqrt(2*Math.PI)/sd;
 }
@@ -270,6 +272,16 @@ function p_to_z(p, taylor=false, N=300){
     return Math.sqrt(2) * erf_inv2(1-2*p, N);
   }
 }
+
+function qqplot(arr){
+  let arr_sorted = sorted(arr);
+  let [mu, sd] = [mean(arr), std(arr)];
+  let rank = range(arr.length).map(i => (i+0.5)/arr.length);
+  rank = rank.map(x => normal_inv(x, mu, sd));
+  return [arr_sorted, rank];
+}
+
+//////////  T-DISTRIBUTION  //////////
 
 /**
  * t-distribution
