@@ -91,6 +91,19 @@ function argsort(arr, reverse=false, plus1=false){
   return original;
 }
 
+// RONDOM (UNIFORM)
+function random(a, b, n=1){
+  let arr = range(n).map(_ => Math.random()*(b-a) + a);
+  return (n===1)? arr[0] : arr;
+}
+
+function randomint(a, b, n=1){
+  [a, b] = [a, b].map(Math.floor);
+  let arr = range(n).map(_ => Math.floor(Math.random()*(b-a)) + a);
+  return (n===1)? arr[0] : arr;
+}
+
+
 ////////////////////  VECTOR & MATRIX  ////////////////////
 
 // NORM OF VECTOR
